@@ -1,11 +1,14 @@
 /* colours */
 :root{
-  --primary: #FFE9D2;
-  --secondary: #FFE1C4;
-  --title: #FF8816;
+  --primary: #e0d2ff;
+  --secondary: #9988f9;
+  --title: #0e0022;
 }
 
 /* layout styles */
+body {
+  padding-bottom: 50px;
+}
 nav{
   background: var(--primary);
   border-bottom: 10px solid var(--secondary);
@@ -21,53 +24,84 @@ nav .sidenav-trigger{
   margin: 0;
 }
 
-/* recipe styles */
-.recipes{
+/* action styles */
+.actions{
   margin-top: 20px;
 }
-.card-panel.recipe{
+.card-panel.action{
   border-radius: 8px;
   padding: 10px;
   box-shadow: 0px 1px 3px rgba(90,90,90,0.1);
   display: grid;
-  grid-template-columns: 2fr 6fr 1fr;
-  grid-template-areas: "image details delete";
+  grid-template-columns: 2fr 6fr 1fr; 
+  grid-template-areas: "time details edit";
   position: relative;
 }
-.recipe img{
-  grid-area: image;
-  max-width: 60px;
+.action-time-normal{
+  grid-area: time;
+  font-size: smaller;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 40px;
 }
-.recipe-details{
+.action-time-main{
+  grid-area: time;
+  font-size: smaller;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 80px;
+}
+.action-time-start{
+}
+.action-time-end{
+}
+.action-details{
   grid-area: details;
   margin-top: 6px;
 }
-.recipe-delete{
-  grid-area: delete;
+.action-edit{
+  grid-area: edit;
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   right: 0px;
 }
-.recipe-delete i{
+.action-edit i{
   font-size: 18px;
 }
-.recipe-title{
+.action-title{
   font-weight: bold;
 }
-.recipe-ingredients{
+.action-detail{
   font-size: 0.8em;
+  max-width: 400px;
 }
 
-/* form-styles */
+/* other-styles */
+.btn-floating {
+  min-width: 240px;
+  position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:216px;
+	border-radius:8px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+.btn-large{
+  border-radius: 8px;
+}
 .add-btn{
-  background: var(--title) !important;
+  background: var(--secondary) !important;
 }
 input{
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
 }
 .side-form button{
-  background: var(--title);
+  background: var(--secondary);
   box-shadow: 1px 1px 3px rgba(90,90,90,0.2);
 }
 form .input-field{
