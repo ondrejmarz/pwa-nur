@@ -1,0 +1,16 @@
+{
+    "name": "Camp Calendar",
+    "short_name": "CampCalendar",
+    "url": "/pages/dnes.html",
+    "display": "standalone",
+    "background_color": "#e0d2ff",
+    "theme_color": "#9988f9",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/img/icons/icon-72x72.png",
+            "type": "image/png",
+            "sizes": "72x72"
+        }
+    ]
+}
