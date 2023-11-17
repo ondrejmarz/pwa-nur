@@ -12,6 +12,8 @@ function timestampToHHMM(timestamp, addMM) {
   return formattedTime;
 }
 
+// Vypíše rozvrh na celý den, parametr day obsahuje všechny informace, na kterých rozvrh závisí
+// Na konci vykresluje tlačítko k archivaci
 function renderDay(day) {
 
   const actionsElement = document.getElementById('day-actions');
@@ -128,7 +130,7 @@ function renderDay(day) {
                   <div class="action-title">Večerka</div>
                 </div>
               </div>
-              
+
               <div class="right">
                 <a class="btn-large add-btn sidenav-trigger" data-target="archivate">Archivovat</a>
               </div>
@@ -149,6 +151,8 @@ function renderDay(day) {
       }
 }
 
+// Vypíše prázdný rozvrh na celý den
+// Na konci vykresluje tlačítko k vytvoření rozvrhu
 function renderEmptyDay() {
 
   const actionsElement = document.getElementById('day-actions');

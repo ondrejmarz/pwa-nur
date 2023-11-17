@@ -1,7 +1,7 @@
 {
     "name": "Camp Calendar",
     "short_name": "CampCalendar",
-    "url": "/pages/dnes.html",
+    "url": "/pages/day.html",
     "display": "standalone",
     "background_color": "#e0d2ff",
     "theme_color": "#9988f9",
