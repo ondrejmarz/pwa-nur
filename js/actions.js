@@ -27,10 +27,15 @@ function renderDay(day) {
               <div class="action-details">
                 <div class="action-title">Budíček</div>
               </div>
+              <div class="action-edit">
+                <i class="material-icons">chevron_right</i>
+              </div>
             </div>
+
             <div id="warm-up">
               
             </div>
+
             <div class="card-panel action white row">
               <div class="action-time-normal">
                 <div class="action-time-start">${timestampToHHMM(day.startOfDay, 30)}</div>
@@ -39,6 +44,7 @@ function renderDay(day) {
                 <div class="action-title">Snídaně</div>
               </div>
             </div>
+
             <div class="card-panel action white row">
               <div class="action-time-main">
                 <div class="action-time-start">10:00</div>
@@ -47,22 +53,25 @@ function renderDay(day) {
               <div class="action-details">
                 <div class="action-title">${day.dopoAction}</div>
               </div>
+              <div class="action-edit">
+                <i class="material-icons">chevron_right</i>
+              </div>
             </div>
   
             <div class="card-panel action white row">
-                <div class="action-time-normal">
-                  <div class="action-time-start">12:30</div>
-                </div> 
-                <div class="action-details">
-                  <div class="action-title">Oběd</div>
-                </div>
+              <div class="action-time-normal">
+                <div class="action-time-start">12:30</div>
+              </div> 
+              <div class="action-details">
+                <div class="action-title">Oběd</div>
               </div>
+            </div>
   
-              <div class="card-panel action white row">
-                <div class="action-details">
-                  <div class="action-title">Polední klid</div>
-                </div>
+            <div class="card-panel action white row">
+              <div class="action-details">
+                <div class="action-title">Polední klid</div>
               </div>
+            </div>
   
             <div class="card-panel action white row">
                 <div class="action-time-main">
@@ -70,6 +79,9 @@ function renderDay(day) {
                 </div> 
                 <div class="action-details">
                   <div class="action-title">${day.odpoAction}</div>
+                </div>
+                <div class="action-edit">
+                  <i class="material-icons">chevron_right</i>
                 </div>
               </div>
   
@@ -88,6 +100,9 @@ function renderDay(day) {
                 </div> 
                 <div class="action-details">
                   <div class="action-title">${day.podAction}</div>
+                </div>
+                <div class="action-edit">
+                  <i class="material-icons">chevron_right</i>
                 </div>
               </div>
   
@@ -127,6 +142,9 @@ function renderDay(day) {
                 <div class="action-details">
                   <div class="action-title">Večerka</div>
                 </div>
+                <div class="action-edit">
+                  <i class="material-icons">chevron_right</i>
+                </div>
               </div>
 
               <div class="right">
@@ -146,6 +164,9 @@ function renderDay(day) {
             <div class="action-details">
                   <div class="action-title">Rozcvička</div>
             </div>
+            <div class="action-edit">
+              <i class="material-icons">chevron_right</i>
+            </div>
           </div>
         `
       }
@@ -154,11 +175,14 @@ function renderDay(day) {
         const nastupElement = document.getElementById('nastup');
     
         nastupElement.innerHTML = `
-        <div class="card-panel action white row">
-          <div class="action-details">
-            <div class="action-title">Nástup</div>
+          <div class="card-panel action white row">
+            <div class="action-details">
+              <div class="action-title">Nástup</div>
+            </div>
+            <div class="action-edit">
+              <i class="material-icons">chevron_right</i>
+            </div>
           </div>
-        </div>
         `
       }
 }
