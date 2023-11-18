@@ -28,7 +28,7 @@ function renderDay(day) {
                 <div class="action-title">Budíček</div>
               </div>
             </div>
-            <div id="warm-up" class="card-panel action white row">
+            <div id="warm-up">
               
             </div>
             <div class="card-panel action white row">
@@ -91,10 +91,8 @@ function renderDay(day) {
                 </div>
               </div>
   
-              <div class="card-panel action white row">
-                <div class="action-details">
-                  <div class="action-title">Nástup</div>
-                </div>
+              <div id="nastup">
+              
               </div>
   
               <div class="card-panel action white row">
@@ -141,12 +139,26 @@ function renderDay(day) {
         const warmUpElement = document.getElementById('warm-up');
     
         warmUpElement.innerHTML = `
-          <div class="action-time-normal">
-            <div class="action-time-start">${timestampToHHMM(day.startOfDay, 15)}</div>
-          </div> 
-          <div class="action-details">
-                <div class="action-title">Rozcvička</div>
+          <div class="card-panel action white row">
+            <div class="action-time-normal">
+              <div class="action-time-start">${timestampToHHMM(day.startOfDay, 15)}</div>
+            </div> 
+            <div class="action-details">
+                  <div class="action-title">Rozcvička</div>
+            </div>
           </div>
+        `
+      }
+
+      if (day.doNastup) {
+        const nastupElement = document.getElementById('nastup');
+    
+        nastupElement.innerHTML = `
+        <div class="card-panel action white row">
+          <div class="action-details">
+            <div class="action-title">Nástup</div>
+          </div>
+        </div>
         `
       }
 }
