@@ -105,3 +105,107 @@ input{
 form .input-field{
   margin-top: 30px;
 }
+
+.card {
+  background-color: white;
+  border: 1px solid #333;
+  border-radius: .5rem;
+  padding: .5rem;
+  display: none;
+}
+
+.card.active {
+  display: block;
+}
+
+
+/* form-styles */
+.form-title{
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-text{
+  font-size: 0.8em;
+  margin-bottom: 10px;
+}
+
+.form-text-bold{
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/*switch*/
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #F5DEB3;
+  color: #282828;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 24px;
+}
+.toggle-checkbox-wrapper {
+  background-color: #fff;
+  padding: 24px;
+}
+
+.toggle-checkbox {
+  display: none;
+}
+
+slider {
+  position: relative;
+}
+
+.slider::before {
+  background: lightblue;
+  border-radius: 34px;
+  bottom: 0;
+  content: '';
+  height: 24px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  width: 40px;
+}
+
+.slider::after {
+  background: navy;
+  border-radius: 50%;
+  bottom: 0;
+  content: '';
+  height: 16px;
+  left: 4px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  transition: 0.4s;
+  width: 16px;
+}
+
+.toggle-switch {
+  margin-left: 50px;
+}
+.toggle-switch.opt1 {
+  color: navy;
+}
+.toggle-switch.opt2 {
+  color: brown;
+  display: none;
+}
+
+.toggle-checkbox:checked + .slider::before {
+  background-color: lightsalmon;
+}
+.toggle-checkbox:checked + .slider::after {
+  background-color: maroon;
+  transform: translateX(16px);
+}
