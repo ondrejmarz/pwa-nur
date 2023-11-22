@@ -18,7 +18,7 @@
     <div class="nav-wrapper container">
       <a class="right" href="/pages/day.html">Vyberte den</a>
       <span class="left grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
+        <i class="material-icons sidenav-trigger" data-target="side-menu">arrow_back</i>
       </span>
     </div>
 
@@ -29,9 +29,11 @@
       <div class="card active" data-step>
         <label class="form-title" >Ranní budík</label><br/> 
         <label class="form-text">Čas včerejší večerky: TODO</label><br/>  <!-- TODO z db -->
-        <label class="form-text-bold">Nastavte čas:</label><br/> 
-        <input id="textboxid" ...>
-        <label>Hodiny</label> 
+        <div class="input-field">
+          <input type="text" id="cas_budiku" name="name">
+          <label for="cas_budiku">Čas budíku</label>
+        </div>
+        <label>Hodiny</label>
         <label>Minuty</label><br/>
         <button type="button">Zpět</button>
         <button type="button" data-next>Další</button>
@@ -56,8 +58,14 @@
         <label class="form-text"> 10:00</label><br/>
         <label class="form-text-bold">Čas do:</label>
         <label class="form-text"> 12:00</label><br/>
-        <input type="text" id="dopo_name" name="name"><br>
-        <input type="text" id="dopo_description" name="description"><br>
+        <div class="input-field">
+          <input type="text" id="dopo_name" name="name"><br>
+          <label for="dopo_name" class="form-text"> Název činnosti</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="dopo_description" name="description"><br>
+          <label for="dopo_description" class="form-text">Popis činnosti</label>
+        </div>
         <button type="button" data-prev>Předchozí</button>
         <button type="button" data-next>Další</button>
       </div>
@@ -67,8 +75,14 @@
         <label class="form-text"> 14:30</label><br/>
         <label class="form-text-bold">Čas do:</label>
         <label class="form-text"> 16:00</label><br/>
-        <input type="text" id="dopo_name" name="name"><br>
-        <input type="text" id="dopo_description" name="description"><br>
+        <div class="input-field">
+          <input type="text" id="odpo_name" name="name">
+          <label for="odpo_name">Název činnosti</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="odpo_description" name="description">
+          <label for="odpo_description">Popis činnosti</label>
+        </div>
         <button type="button" data-prev>Předchozí</button>
         <button type="button" data-next>Další</button>
       </div>
@@ -78,8 +92,14 @@
         <label class="form-text"> 16:30</label><br/>
         <label class="form-text-bold">Čas do:</label>
         <label class="form-text"> 18:00</label><br/>
-        <input type="text" id="dopo_name" name="name"><br>
-        <input type="text" id="dopo_description" name="description"><br>
+        <div class="input-field">
+          <input type="text" id="podvecer_name" name="name">
+          <label for="podvecer_name">Název činnosti</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="podvecer_description" name="description">
+          <label for="podvecer_description">Popis činnosti</label>
+        </div>
         <button type="button" data-prev>Předchozí</button>
         <button type="button" data-next>Další</button>
       </div>
@@ -102,17 +122,25 @@
         <label class="form-text"> 20:00</label><br/>
         <label class="form-text-bold">Čas do:</label>
         <label class="form-text"> půl hodiny před večerkou</label><br/>
-        <input type="text" id="dopo_name" name="name"><br>
-        <input type="text" id="dopo_description" name="description"><br>
+        <div class="input-field">
+          <input type="text" id="vecerni_name" name="name">
+          <label for="vecerni_name">Název činnosti</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="vecerni_description" name="description">
+          <label for="vecerni_description">Popis činnosti</label>
+        </div>
         <button type="button" data-prev>Předchozí</button>
         <button type="button" data-next>Další</button>
       </div>
       <div class="card" data-step>
-        <label class="form-title" >Večerka</label><br/> 
+        <label class="form-title" >Večerka</label><br/>
         <label class="form-text">Čas včerejší večerky: TODO</label><br/>  <!-- TODO z db -->
-        <label class="form-text-bold">Nastavte čas:</label><br/> 
-        <input id="textboxid" ...>
-        <label>Hodiny</label> 
+        <div class="input-field">
+          <input type="text" id="cas_vecerky" name="name">
+          <label for="cas_vecerky">Čas večerky</label>
+        </div>
+        <label>Hodiny</label>
         <label>Minuty</label><br/>
         <button type="button" data-prev>Předchozí</button>
         <button type="submit" class="btn">Uložit</button>
