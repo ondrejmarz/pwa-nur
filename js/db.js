@@ -16,6 +16,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+const taborCollection = db.collection('tabor')
+
+const taborId = 'PZoqUnD5OMJcO1aQoPfP'
+const currentTaborDocument = taborCollection.doc(taborId)
+export const daysCollection = currentTaborDocument.collection('days')
 
 // Get a list of cities from your database
 export async function getActions(db) {
@@ -23,4 +28,33 @@ export async function getActions(db) {
   const actionsSnapshot = await getDocs(actionsColl);
   const actionsList = actionsSnapshot.docs.map(doc => doc.data());
   return actionsList;
+}
+export function getDayById(dayId) {
+    return daysCollection.doc(dayId).get()
+        .then(res => {
+            const dayData = res.data()
+            dayData["id"] = res.id
+            return dayData
+        })
+        .catch(e => {
+            console.error("Error while loading day by id", dayId)
+            console.error(e)
+        })
+}
+
+export function loadAllDaysOfTabor() {
+    return daysCollection.get()
+        .then(doc => {
+            const days = []
+            doc.forEach((d) => {
+                const dayData = d.data()
+                dayData["id"] = d.id
+                days.push(dayData)
+            })
+            return days
+        })
+        .catch((error) => {
+            console.error("Error during loading all days of tabor")
+            console.error(error)
+        });
 }
