@@ -48,7 +48,7 @@
     const currentTaborDocument = taborCollection.doc(taborId)
     const daysCollection = currentTaborDocument.collection('days')
 
-    function loadAllDaysOfTabor() {
+    async function loadAllDaysOfTabor() {
       return daysCollection.get()
               .then(doc => {
                 const days = []
@@ -84,9 +84,11 @@
 
     /**
      * toto vygeneruje do navbaru rozklikatka
+     * take vygeneruje rozvrh prvniho dne
      */
     async function renderListOfDays() {
       const days = await loadAllDaysOfTabor()
+      renderDay(days[0])
       console.log(days)
       days.forEach(day => {
         renderDayLiElement(day)
@@ -99,19 +101,6 @@
   <!-- side nav -->
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">Výběr dne</a></li>
-
-<!--    &lt;!&ndash; dny  &ndash;&gt;-->
-<!--    <li><a onclick="loadDayById(1)"  class="waves-effect">Pátek 6. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(2)"  class="waves-effect">Sobota 7. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(3)"  class="waves-effect">Neděle 8. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(4)"  class="waves-effect">Pondělí 9. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(5)"  class="waves-effect">Úterý 10. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(6)"  class="waves-effect">Středa 11. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(7)"  class="waves-effect">Čtvrtek 12. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(8)"  class="waves-effect">Pátek 13. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(9)"  class="waves-effect">Sobota 14. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(10)" class="waves-effect">Neděle 15. 8.</a></li>-->
-<!--    <li><a onclick="loadDayById(11)" class="waves-effect">Pondělí 16. 8.</a></li>-->
   </ul>
 
   <div id="day-actions"></div>

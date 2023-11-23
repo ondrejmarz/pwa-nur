@@ -1,3 +1,29 @@
+function generateEmptyDayData() {
+    return {
+        doWarmUp: true,
+        podAction: "",
+        budik: {
+            seconds: 1700722800,
+            nanoseconds: 798000000
+        },
+        odpoActionDesc: "",
+        doNastup: true,
+        veActionDesc: "",
+        timetableCreated: false,
+        vecerka: {
+            seconds: 1700773200,
+            nanoseconds: 342000000
+        },
+        dopoAction: "",
+        odpoAction: "",
+        veAction: "",
+        podActionName: "",
+        date: "13.7.",
+        day: "Pondělí",
+        dopoActionDesc: "",
+    }
+}
+
 function timestampToHHMM(timestamp, addMM) {
   // Převedení Timestamp na objekt Date
   const date = new Date((timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6) + addMM * 60 * 1000);
@@ -17,12 +43,27 @@ function timestampToHHMM(timestamp, addMM) {
 function renderDay(day) {
 
   const actionsElement = document.getElementById('day-actions');
+    day.dopoAction = day.dopoAction === "" ? "Dopolední akce (k vyplnění)": day.dopoAction
+    day.podAction = day.podAction === "" ? "Podvečerní akce (k vyplnění)": day.podAction
+    day.odpoAction = day.odpoAction === "" ? "Odpolední akce (k vyplnění)": day.odpoAction
+    day.veAction = day.veAction === "" ? "Večerní akce (k vyplnění)": day.veAction
+    const createTimetableBtn = `
+          <div class="right">
+            <a class="btn-floating btn-large add-btn sidenav-trigger" data-target="create-form">Vytvořit rozvrh</a>
+          </div>
+    `
+    const archiveButton = `
+              <div class="right">
+                <a class="btn-large add-btn sidenav-trigger" data-target="archivate">Archivovat</a>
+              </div>
+    `
+    const btnUsed = day.timetableCreated ? archiveButton : createTimetableBtn
 
   actionsElement.innerHTML = `
       <div class="actions container grey-text text-darken-1">
             <div class="card-panel action white row">
               <div class="action-time-normal">
-                <div class="action-time-start">${timestampToHHMM(day.startOfDay, 0)}</div>
+                <div class="action-time-start">${timestampToHHMM(day.budik, 0)}</div>
               </div> 
               <div class="action-details">
                 <div class="action-title">Budíček</div>
@@ -38,7 +79,7 @@ function renderDay(day) {
 
             <div class="card-panel action white row">
               <div class="action-time-normal">
-                <div class="action-time-start">${timestampToHHMM(day.startOfDay, 30)}</div>
+                <div class="action-time-start">${timestampToHHMM(day.budik, 30)}</div>
               </div>
               <div class="action-details">
                 <div class="action-title">Snídaně</div>
@@ -122,7 +163,7 @@ function renderDay(day) {
               <div class="card-panel action white row">
                 <div class="action-time-main">
                   <div class="action-time-start">20:00</div>
-                  <div class="action-time-end">${timestampToHHMM(day.endOfDay, -15)}</div>
+                  <div class="action-time-end">${timestampToHHMM(day.vecerka, -15)}</div>
                 </div> 
                 <div class="action-details">
                   <div class="action-title">${day.veAction}</div>
@@ -137,7 +178,7 @@ function renderDay(day) {
   
               <div class="card-panel action white row">
                 <div class="action-time-normal">
-                  <div class="action-time-start">${timestampToHHMM(day.endOfDay, 0)}</div>
+                  <div class="action-time-start">${timestampToHHMM(day.vecerka, 0)}</div>
                 </div> 
                 <div class="action-details">
                   <div class="action-title">Večerka</div>
@@ -147,9 +188,7 @@ function renderDay(day) {
                 </div>
               </div>
 
-              <div class="right">
-                <a class="btn-large add-btn sidenav-trigger" data-target="archivate">Archivovat</a>
-              </div>
+              ${btnUsed}
       </div>
       `;
 
@@ -159,7 +198,7 @@ function renderDay(day) {
         warmUpElement.innerHTML = `
           <div class="card-panel action white row">
             <div class="action-time-normal">
-              <div class="action-time-start">${timestampToHHMM(day.startOfDay, 15)}</div>
+              <div class="action-time-start">${timestampToHHMM(day.budik, 15)}</div>
             </div> 
             <div class="action-details">
                   <div class="action-title">Rozcvička</div>
@@ -185,133 +224,4 @@ function renderDay(day) {
           </div>
         `
       }
-}
-
-// Vypíše prázdný rozvrh na celý den
-// Na konci vykresluje tlačítko k vytvoření rozvrhu
-function renderEmptyDay() {
-
-  const actionsElement = document.getElementById('day-actions');
-
-  actionsElement.innerHTML = `
-      <div class="actions container grey-text text-darken-1">
-        <div class="card-panel action white row">
-          <div class="action-time-normal">
-            <div class="action-time-start">8:00</div>
-          </div> 
-          <div class="action-details">
-            <div class="action-title">Budíček</div>
-          </div>
-        </div>
-        <div class="card-panel action white row">
-          <div class="action-time-normal">
-            <div class="action-time-start">8:15</div>
-          </div> 
-          <div class="action-details">
-            <div class="action-title">Rozcvička</div>
-          </div>
-        </div>
-        <div class="card-panel action white row">
-          <div class="action-time-normal">
-            <div class="action-time-start">8:30</div>
-          </div>
-          <div class="action-details">
-            <div class="action-title">Snídaně</div>
-          </div>
-        </div>
-        <div class="card-panel action white row">
-          <div class="action-time-main">
-            <div class="action-time-start">10:00</div>
-            <div class="action-time-end">12:00</div>
-          </div> 
-          <div class="action-details">
-            <div class="action-title">Dopolední činnost</div>
-          </div>
-        </div>
-
-        <div class="card-panel action white row">
-            <div class="action-time-normal">
-              <div class="action-time-start">12:30</div>
-            </div> 
-            <div class="action-details">
-              <div class="action-title">Oběd</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-details">
-              <div class="action-title">Polední klid</div>
-            </div>
-          </div>
-
-        <div class="card-panel action white row">
-            <div class="action-time-main">
-              <div class="action-time-start">14:30</div>
-            </div> 
-            <div class="action-details">
-              <div class="action-title">Odpolední činnost</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-time-normal">
-              <div class="action-time-start">16:00</div>
-            </div> 
-            <div class="action-details">
-              <div class="action-title">Svačina</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-time-main">
-              <div class="action-time-start">17:00</div>
-            </div> 
-            <div class="action-details">
-              <div class="action-title">Podvečerní činnost</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-details">
-              <div class="action-title">Nástup</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-time-normal">
-              <div class="action-time-start">19:00</div>
-            </div> 
-            <div class="action-details">
-              <div class="action-title">Večeře</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-time-main">
-              <div class="action-time-start">20:00</div>
-            </div> 
-            <div class="action-details">
-              <div class="action-title">Večerní činnost</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-details">
-              <div class="action-title">Příprava na večerku</div>
-            </div>
-          </div>
-
-          <div class="card-panel action white row">
-            <div class="action-time-normal">
-              <div class="action-time-start">22:00</div>
-            </div> 
-            <div class="action-details">
-              <div class="action-title">Večerka</div>
-            </div>
-          </div>
-
-          <div class="right">
-            <a class="btn-floating btn-large add-btn sidenav-trigger" data-target="create-form">Vytvořit rozvrh</a>
-          </div>
-        `
 }
