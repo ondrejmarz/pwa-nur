@@ -7,7 +7,7 @@
 
 /* layout styles */
 body {
-  padding-bottom: 150px;
+  padding: 0!important;
 }
 nav{
   background: var(--primary);
