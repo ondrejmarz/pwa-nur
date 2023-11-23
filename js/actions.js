@@ -41,6 +41,7 @@ function timestampToHHMM(timestamp, addMM) {
 // Vypíše rozvrh na celý den, parametr day obsahuje všechny informace, na kterých rozvrh závisí
 // Na konci vykresluje tlačítko k archivaci
 function renderDay(day) {
+    document.getElementById("appbar-title").innerText = day.day + " " + day.date
 
   const actionsElement = document.getElementById('day-actions');
     day.dopoAction = day.dopoAction === "" ? "Dopolední akce (k vyplnění)": day.dopoAction
