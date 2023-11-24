@@ -235,13 +235,19 @@ function renderDay(day) {
       }
 }
 
+var previous_header = null;
+var previous_content = null;
 function backClick() {
- window.history.back();
+  const actionsElement = document.getElementById('day-actions');
+  actionsElement.innerHTML = previous_content;
+  var div_to_replace = document.getElementById('replace');
+  div_to_replace.innerHTML = previous_header;
 }
 
 function renderCreateForm() {
 
   var div_to_replace = document.getElementById('replace');
+  previous_header = div_to_replace.innerHTML;
   div_to_replace.innerHTML = ` <span id="appbar-title">Tvorba rozvrhu</span>
   <span onclick=backClick() id="menuIcon" class="left grey-text text-darken-1">
     <i class="material-icons">arrow_back</i>
@@ -256,6 +262,7 @@ function renderCreateForm() {
   var script = document.createElement('script');
   script.setAttribute('src', '/js/script.js');
 
+  previous_content = actionsElement.innerHTML;
   actionsElement.innerHTML = `
   <div>
   <form data-multi-step class="multi-step-form">
