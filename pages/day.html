@@ -8,6 +8,8 @@
   <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" href="/css/styles.css" rel="stylesheet">
+  <link type="text/css" href="/css/style_detail.css" rel="stylesheet">
+
   <script type="text/javascript" src="/js/materialize.min.js"></script>
   <link rel="manifest" href="../manifest.json">
 </head>
@@ -23,47 +25,16 @@
     </div>
   </nav>
 
-  <script src="/js/actions.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
-  <script>
-    // Inicializace Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyBREpNaltCczA4mw8MXPFvodWsmNzeI5sw",
-      authDomain: "pwa-camp-calendar.firebaseapp.com",
-      projectId: "pwa-camp-calendar",
-      storageBucket: "pwa-camp-calendar.appspot.com",
-      messagingSenderId: "371363956824",
-      appId: "1:371363956824:web:937bb8bebc462536e8622d",
-      measurementId: "G-BMEXF6MDF0"
-    };
-    const app = firebase.initializeApp(firebaseConfig);
+  <script src="/js/actions.js"></script>
+  
 
-    // Získání instance Firestore
-    const db = app.firestore(app);
-
-    function saveId(id) {
-      
-      db.collection("actions")
-      .where("id", "==", id )
-      .limit(1)
-      .get()
-      .then(querySnapshot => {
-          console.log( querySnapshot.docs[0].data() );
-          renderDay( querySnapshot.docs[0].data() );
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-          renderEmptyDay();
-      });
-    }
-
-  </script>
 
   <!-- side nav -->
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">Výběr dne</a></li>
-
+ 
     <!-- dny  -->
     <li><a onclick="saveId(1)"  class="waves-effect">Pátek 6. 8.</a></li>
     <li><a onclick="saveId(2)"  class="waves-effect">Sobota 7. 8.</a></li>
@@ -80,6 +51,7 @@
 
   <div id="day-actions"></div>
     
+
   </div>
 
   <script src="/js/ui.js"></script>
