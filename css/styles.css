@@ -215,3 +215,8 @@ slider {
   background-color: maroon;
   transform: translateX(16px);
 }
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
