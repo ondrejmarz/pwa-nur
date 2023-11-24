@@ -48,11 +48,13 @@ function renderDay(day) {
     day.podAction = day.podAction === "" ? "Podvečerní akce (k vyplnění)": day.podAction
     day.odpoAction = day.odpoAction === "" ? "Odpolední akce (k vyplnění)": day.odpoAction
     day.veAction = day.veAction === "" ? "Večerní akce (k vyplnění)": day.veAction
+
     const createTimetableBtn = `
           <div class="right">
-            <a class="btn-floating btn-large add-btn sidenav-trigger" data-target="create-form">Vytvořit rozvrh</a>
+            <a id="create-form-btn" class="btn-floating btn-large add-btn sidenav-trigger" data-target="create-form-btn">Vytvořit rozvrh</a>
           </div>
     `
+
     const archiveButton = `
               <div class="right">
                 <a class="btn-large add-btn sidenav-trigger" data-target="archivate">Archivovat</a>
@@ -225,4 +227,196 @@ function renderDay(day) {
           </div>
         `
       }
+
+      if (createTimetableBtn) {
+        const createTimetableBtn = document.getElementById('create-form-btn');
+        createTimetableBtn.addEventListener('click', renderCreateForm)
+        console.log("on click added")
+      }
+}
+
+function renderCreateForm() {
+  console.log("on click2")
+
+  const actionsElement = document.getElementById('day-actions');
+  console.log("on click3")
+
+  var script = document.createElement('script');
+  script.setAttribute('src', '/js/script.js');
+
+  actionsElement.innerHTML = `
+  <div>
+  <form data-multi-step class="multi-step-form">
+  <div class="card active" data-step>
+    <label class="form-title" >Ranní budík</label><br/> 
+    <label class="form-text">Čas včerejší večerky: TODO</label><br/>  <!-- TODO z db -->
+    <div class="input-field">
+      <input type="text" id="cas_budiku" name="name">
+      <label for="cas_budiku">Čas budíku</label>
+    </div>
+    <label>Hodiny</label>
+    <label>Minuty</label><br/>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn">Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Ranní rozcvička</label><br/>
+    <label class="form-text">Ranní rozcvička 15 minut po budíku.</label><br/>
+    <label class="form-text-bold">Čas:</label>
+    <label class="form-text"> 08:15</label><br/>
+    <label class="form-text-bold">Rozcvička se bude konat: </label>
+    <div class="toggle-checkbox-wrapper">
+      <input class="toggle-checkbox" type="checkbox" id="toggle">
+      <label class="slider" for="toggle">
+      </label>
+    </div><br/>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Dopolední činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 10:00</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> 12:00</label><br/>
+    <div class="input-field">
+      <input type="text" id="dopo_name" name="name"><br>
+      <label for="dopo_name" class="form-text"> Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input type="text" id="dopo_description" name="description"><br>
+      <label for="dopo_description" class="form-text">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Odpolední činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 14:30</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> 16:00</label><br/>
+    <div class="input-field">
+      <input type="text" id="odpo_name" name="name">
+      <label for="odpo_name">Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input type="text" id="odpo_description" name="description">
+      <label for="odpo_description">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Podvečerní činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 16:30</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> 18:00</label><br/>
+    <div class="input-field">
+      <input type="text" id="podvecer_name" name="name">
+      <label for="podvecer_name">Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input type="text" id="podvecer_description" name="description">
+      <label for="podvecer_description">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Večerní nástup</label><br/>
+    <label class="form-text-bold">Čas:</label>
+    <label class="form-text"> 18:30</label><br/>
+    <label class="form-text-bold">Nástup se bude konat: </label>
+    <div class="toggle-checkbox-wrapper">
+      <input class="toggle-checkbox" type="checkbox" id="toggle">
+      <label class="slider" for="toggle">
+      </label>
+    </div><br/>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Večerní činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 20:00</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> půl hodiny před večerkou</label><br/>
+    <div class="input-field">
+      <input type="text" id="vecerni_name" name="name">
+      <label for="vecerni_name">Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input type="text" id="vecerni_description" name="description">
+      <label for="vecerni_description">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title" >Večerka</label><br/>
+    <label class="form-text">Čas včerejší večerky: TODO</label><br/>  <!-- TODO z db -->
+    <div class="input-field">
+      <input type="text" id="cas_vecerky" name="name">
+      <label for="cas_vecerky">Čas večerky</label>
+    </div>
+    <label>Hodiny</label>
+    <label>Minuty</label><br/>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-submit>Uložit</a>
+      </div>
+    </div>
+  </div>
+  </form>
+ </div>
+  `;
+
+  actionsElement.appendChild(script)
 }

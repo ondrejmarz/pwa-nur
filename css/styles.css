@@ -118,6 +118,7 @@ form .input-field{
   border-radius: .5rem;
   padding: .5rem;
   display: none;
+  min-height: 80%;
 }
 
 .card.active {
@@ -219,4 +220,7 @@ slider {
 .button-container {
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  right:    0;
+  bottom:   0;
 }

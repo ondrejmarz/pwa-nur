@@ -1,3 +1,4 @@
+console.log("script loaded")
 const multiStepForm = document.querySelector("[data-multi-step]")
 const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
 let currentStep = formSteps.findIndex(step => {
@@ -10,6 +11,7 @@ if (currentStep < 0) {
 }
 
 multiStepForm.addEventListener("click", e => {
+  console.log("script loaded 1")
   let incrementor
   if (e.target.matches("[data-next]")) {
     incrementor = 1
@@ -24,6 +26,7 @@ multiStepForm.addEventListener("click", e => {
   if (allValid) {
     currentStep += incrementor
     showCurrentStep()
+    console.log("show current step")
   }
 })
 /*
@@ -35,6 +38,7 @@ formSteps.forEach(step => {
 }) */
 
 function showCurrentStep() {
+  console.log("showing current step")
   formSteps.forEach((step, index) => {
     step.classList.toggle("active", index === currentStep)
   })
