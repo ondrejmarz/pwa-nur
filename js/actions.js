@@ -235,7 +235,19 @@ function renderDay(day) {
       }
 }
 
+function backClick() {
+ window.history.back();
+}
+
 function renderCreateForm() {
+
+  var div_to_replace = document.getElementById('replace');
+  div_to_replace.innerHTML = ` <span id="appbar-title">Tvorba rozvrhu</span>
+  <span onclick=backClick() id="menuIcon" class="left grey-text text-darken-1">
+    <i class="material-icons">arrow_back</i>
+  </span>`
+  
+
   console.log("on click2")
 
   const actionsElement = document.getElementById('day-actions');
