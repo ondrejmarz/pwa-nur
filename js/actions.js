@@ -38,11 +38,42 @@ function timestampToHHMM(timestamp, addMM) {
   return formattedTime;
 }
 
+function goToDetail(activityId){
+  console.log(currentDay)
+  switch (activityId) {
+    case 1:
+      renderActivity("10:00","11:00","Budíček",currentDay.dopoAction,currentDay.dopoActionDesc)
+      break;
+    case 2:
+      renderActivity("10:00","11:00","Rozcvička",currentDay.dopoAction,currentDay.dopoActionDesc)
+      break;
+    case 3:
+      renderActivity("10:00","11:00","Dopolední aktivita",currentDay.dopoAction,currentDay.dopoActionDesc)
+      break;
+    case 4:
+      renderActivity("10:00","11:00","Odpolední aktivita",currentDay.odpoAction,currentDay.odpoActionDesc)
+      break;
+    case 5:
+      renderActivity("10:00","11:00","Podvečerní aktivita",currentDay.podAction,currentDay.podActionName)
+      break;
+    case 6:
+      renderActivity("10:00","11:00","Večerka",currentDay.veAction,currentDay.veActionDesc)
+      break;
+    case 7:
+      renderActivity("10:00","11:00","Večerka",currentDay.dopoAction,currentDay.dopoActionDesc)
+      break;
+    default:
+      break;
+    
+}
+return;
+}
+
 // Vypíše rozvrh na celý den, parametr day obsahuje všechny informace, na kterých rozvrh závisí
 // Na konci vykresluje tlačítko k archivaci
 function renderDay(day) {
     document.getElementById("appbar-title").innerText = day.day + " " + day.date
-
+    currentDay = day;
   const actionsElement = document.getElementById('day-actions');
     day.dopoAction = day.dopoAction === "" ? "Dopolední akce (k vyplnění)": day.dopoAction
     day.podAction = day.podAction === "" ? "Podvečerní akce (k vyplnění)": day.podAction
@@ -69,7 +100,7 @@ function renderDay(day) {
               <div class="action-details">
                 <div class="action-title">Budíček</div>
               </div>
-              <div class="action-edit">
+              <div onclick="goToDetail(1)" class="action-edit">
                 <i class="material-icons">chevron_right</i>
               </div>
             </div>
@@ -95,8 +126,8 @@ function renderDay(day) {
               <div class="action-details">
                 <div class="action-title">${day.dopoAction}</div>
               </div>
-              <div class="action-edit">
-                <i class="material-icons">chevron_right</i>
+              <div onclick="goToDetail(3)" class="action-edit">
+                <i class="material-icons" >chevron_right</i>
               </div>
             </div>
   
@@ -122,7 +153,7 @@ function renderDay(day) {
                 <div class="action-details">
                   <div class="action-title">${day.odpoAction}</div>
                 </div>
-                <div class="action-edit">
+                <div onclick="goToDetail(4)" class="action-edit">
                   <i class="material-icons">chevron_right</i>
                 </div>
               </div>
@@ -143,7 +174,7 @@ function renderDay(day) {
                 <div class="action-details">
                   <div class="action-title">${day.podAction}</div>
                 </div>
-                <div class="action-edit">
+                <div onclick="goToDetail(5)" class="action-edit">
                   <i class="material-icons">chevron_right</i>
                 </div>
               </div>
@@ -169,6 +200,9 @@ function renderDay(day) {
                 <div class="action-details">
                   <div class="action-title">${day.veAction}</div>
                 </div>
+                <div onclick="goToDetail(6)" class="action-edit">
+                <i class="material-icons">chevron_right</i>
+              </div>
               </div>
   
               <div class="card-panel action white row">
@@ -184,7 +218,7 @@ function renderDay(day) {
                 <div class="action-details">
                   <div class="action-title">Večerka</div>
                 </div>
-                <div class="action-edit">
+                <div onclick="goToDetail(7)" class="action-edit">
                   <i class="material-icons">chevron_right</i>
                 </div>
               </div>
@@ -204,7 +238,7 @@ function renderDay(day) {
             <div class="action-details">
                   <div class="action-title">Rozcvička</div>
             </div>
-            <div class="action-edit">
+            <div onclick="goToDetail(2)" class="action-edit">
               <i class="material-icons">chevron_right</i>
             </div>
           </div>
@@ -225,4 +259,47 @@ function renderDay(day) {
           </div>
         `
       }
+    }
+
+
+function renderActivity(from, to, type ,name, description) {
+
+  const actionsElement = document.getElementById('day-actions');
+
+  actionsElement.innerHTML = `
+  <body>
+  <div class="odpoledn-innost">
+    <div class="div">
+      <div class="overlap">
+        <div class="rectangle">
+          <div class="as-bud-ku-mus-b-t">Čas od: ${from} </div>
+          <div class="text-wrapper-2">Čas do: ${to} </div>
+          <div class="text-wrapper">${type}</div>
+          <div class="overlap-group">
+            <div class="content-wrapper">
+              <div class="content">
+                <div class="div-wrapper"><div class="label-text-2">Název činnosti</div></div>
+                <div class="placeholder-text"><div class="placeholder-text-2">${name}</div></div>
+              </div>
+            </div>
+            <div class="state-layer-2">
+              <div class="content">
+                <div class="label-text-3"><div class="label-text-2">Popis činnosti</div></div>
+                <div class="placeholder-text-wrapper">
+                  <p class="p">
+                  ${description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="btn-floating-update-actvity btn-large add-btn sidenav-trigger">
+  <div class="label-text-wrapper"><div class="label-text">Upravit</div></div>
+  </div>
+  </div>
+        `
 }
