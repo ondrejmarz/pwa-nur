@@ -5,9 +5,15 @@
   --title: #0e0022;
 }
 
+#appbar-title {
+  color: black;
+  margin-left: 1.5rem;
+  font-size: 1.3rem;
+}
+
 /* layout styles */
 body {
-  padding-bottom: 150px;
+  padding: 0!important;
 }
 nav{
   background: var(--primary);
