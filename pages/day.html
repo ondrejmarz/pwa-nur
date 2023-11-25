@@ -96,7 +96,7 @@
     }
     renderListOfDays()
 
-  async function loadLastDayOfDay(day) {
+  function loadLastDayOfDay(day) {
   console.log(day)
   const lastDayId = day["lastDayId"]
   if (lastDayId === "") {
@@ -114,7 +114,7 @@
             console.error(e)
           })
 }
-async function loadLastDayOfDayById(dayId) {
+function loadLastDayOfDayById(dayId) {
   const lastDayId = dayId
   if (lastDayId === "") {
     console.log("day is first")

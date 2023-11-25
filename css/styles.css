@@ -506,3 +506,20 @@ slider {
   right:    0;
   bottom:   0;
 }
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-container label {
+  margin-right: 10px;
+}
+
+.input-container input {
+  padding: 5px;
+}
+
+.input-column {
+  flex-direction: column;
+}

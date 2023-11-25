@@ -347,12 +347,17 @@ async function renderCreateForm(id) {
   <div class="card active" data-step>
     <label class="form-title" >Ranní budík</label><br/> 
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
-    <div class="input-field">
-      <input type="text" id="cas_budiku" name="name">
-      <label for="cas_budiku">Čas budíku</label>
+    <div class="input-container">
+        <div class="input-column">
+        <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+        <label for="hours">Hodiny</label>
+        </div>
+        <span>:</span>
+        <div class="input-column">
+        <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+        <label for="minutes">Minuty</label>
+        </div>
     </div>
-    <label>Hodiny</label>
-    <label>Minuty</label><br/>
     <div class="button-container">
       <div class="right">
         <a class="btn-large add-btn">Předchozí</a>
@@ -496,12 +501,17 @@ async function renderCreateForm(id) {
   <div class="card" data-step>
     <label class="form-title" >Večerka</label><br/>
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
-    <div class="input-field">
-      <input type="text" id="cas_vecerky" name="name">
-      <label for="cas_vecerky">Čas večerky</label>
+    <div class="input-container">
+    <div class="input-column">
+    <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+    <label for="hours">Hodiny</label>
     </div>
-    <label>Hodiny</label>
-    <label>Minuty</label><br/>
+    <span>:</span>
+    <div class="input-column">
+    <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+    <label for="minutes">Minuty</label>
+    </div>
+</div>
     <div class="button-container">
       <div class="right">
         <a class="btn-large add-btn" data-prev>Předchozí</a>
