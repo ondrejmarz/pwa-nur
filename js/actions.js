@@ -82,7 +82,7 @@ function renderDay(day) {
 
     const createTimetableBtn = `
           <div class="right">
-            <a id="create-form-btn" class="btn-floating btn-large add-btn sidenav-trigger" data-target="create-form-btn">Vytvořit rozvrh</a>
+            <a id="create-form-btn" class="btn-floating btn-large add-btn">Vytvořit rozvrh</a>
           </div>
     `
 
@@ -319,6 +319,9 @@ function backClick() {
   actionsElement.innerHTML = previous_content;
   var div_to_replace = document.getElementById('replace');
   div_to_replace.innerHTML = previous_header;
+  const createTimetableBtn = document.getElementById('create-form-btn');
+  createTimetableBtn.addEventListener('click', renderCreateForm)
+  console.log("on click added")
 }
 
 function renderCreateForm() {
@@ -335,9 +338,6 @@ function renderCreateForm() {
 
   const actionsElement = document.getElementById('day-actions');
   console.log("on click3")
-
-  var script = document.createElement('script');
-  script.setAttribute('src', '/js/script.js');
 
   previous_content = actionsElement.innerHTML;
   actionsElement.innerHTML = `
