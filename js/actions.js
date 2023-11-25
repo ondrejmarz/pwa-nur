@@ -107,6 +107,9 @@ function goToDetail(activityId){
     case 7:
       renderActivity("22:00","8:00","Večerka","","",activityId)//todo update 
       break;
+    case 8:
+        // toto jest vecerni nastup,
+      break;
     default:
       break;
     
@@ -390,7 +393,7 @@ function renderActivity(from, to, type ,name, description,activityId) {
 
     const createTimetableBtn = document.getElementById('update-from-btn');
     console.log("current day: ", currentDay)
-    createTimetableBtn.addEventListener('click', () => renderUpdateForm(currentDay.previous_day_id,activityId, currentDay.day + " " + currentDay.date))
+    createTimetableBtn.addEventListener('click', () => renderUpdateForm(currentDay.previous_day_id,activityId, currentDay.day + " " + currentDay.date, activityId))
 }
 
 var previous_header = null;
@@ -424,7 +427,7 @@ async function renderCreateForm(id) {
   actionsElement.innerHTML = `
   <div>
   <form data-multi-step class="multi-step-form">
-  <div class="card active" data-step>
+  <div class="card active" data-step data-card-name="ranni_budik" data-activity-id="1">
     <label class="form-title" >Ranní budík</label><br/> 
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
     <div class="input-container">
@@ -447,7 +450,7 @@ async function renderCreateForm(id) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-card-name="rozcvicka" data-activity-id="2">
     <label class="form-title">Ranní rozcvička</label><br/>
     <label class="form-text">Ranní rozcvička 15 minut po budíku.</label><br/>
     <label class="form-text-bold">Čas:</label>
@@ -467,7 +470,7 @@ async function renderCreateForm(id) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-card-name="dopoledni_cinnost" data-activity-id="3">
     <label class="form-title">Dopolední činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 10:00</label><br/>
@@ -490,7 +493,7 @@ async function renderCreateForm(id) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-card-name="odpoledni_cinnost" data-activity-id="4">
     <label class="form-title">Odpolední činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 14:30</label><br/>
@@ -513,7 +516,7 @@ async function renderCreateForm(id) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-card-name="podvecerni_cinnost" data-activity-id="5">
     <label class="form-title">Podvečerní činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 16:30</label><br/>
@@ -536,7 +539,7 @@ async function renderCreateForm(id) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-card-name="vecerni_nastup" data-activity-id="8">
     <label class="form-title">Večerní nástup</label><br/>
     <label class="form-text-bold">Čas:</label>
     <label class="form-text"> 18:30</label><br/>
@@ -555,7 +558,7 @@ async function renderCreateForm(id) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-card-name="vecerni_cinnost" data-activity-id="6">
     <label class="form-title">Večerní činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 20:00</label><br/>
@@ -578,7 +581,7 @@ async function renderCreateForm(id) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-card-name="vecerka" data-activity-id="7">
     <label class="form-title" >Večerka</label><br/>
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
     <div class="input-container">
@@ -668,7 +671,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
   actionsElement.innerHTML = `
   <div>
   <form data-multi-step class="multi-step-form">
-  <div class="card active" data-step>
+  <div class="card active" data-step data-activity-id="1">
     <label class="form-title" >Ranní budík</label><br/> 
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(currentDay.vecerka, 0)}</label><br/>
     <div class="input-container">
@@ -691,7 +694,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-activity-id="2">
     <label class="form-title">Ranní rozcvička</label><br/>
     <label class="form-text">Ranní rozcvička 15 minut po budíku.</label><br/>
     <label class="form-text-bold">Čas:</label>
@@ -711,7 +714,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-activity-id="3">
     <label class="form-title">Dopolední činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 10:00</label><br/>
@@ -734,7 +737,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-activity-id="4">
     <label class="form-title">Odpolední činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 14:30</label><br/>
@@ -757,7 +760,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-activity-id="5">
     <label class="form-title">Podvečerní činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 16:30</label><br/>
@@ -780,7 +783,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-activity-id="8">
     <label class="form-title">Večerní nástup</label><br/>
     <label class="form-text-bold">Čas:</label>
     <label class="form-text"> 18:30</label><br/>
@@ -799,7 +802,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-activity-id="6">
     <label class="form-title">Večerní činnost</label><br/>
     <label class="form-text-bold">Čas od:</label>
     <label class="form-text"> 20:00</label><br/>
@@ -822,7 +825,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       </div>
     </div>
   </div>
-  <div class="card" data-step>
+  <div class="card" data-step data-activity-id="7">
     <label class="form-title" >Večerka</label><br/>
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(currentDay.vecerka, 0)}</label><br/>
     <div class="input-container">
@@ -849,42 +852,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
  </div>
   `;
 
-  console.log("script loaded")
-const multiStepForm = document.querySelector("[data-multi-step]")
-const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
-let currentStep = formSteps.findIndex(step => {
-  return step.classList.contains("active")
-})
-currentStep = activityId - 1;
-if (currentStep < 0) {
-  currentStep = 0
-  showCurrentStep()
+    makeCardActiveByActivityId(activityId)
 }
 
-multiStepForm.addEventListener("click", e => {
-  console.log("script loaded 1")
-  let incrementor
-  if (e.target.matches("[data-next]")) {
-    incrementor = 1
-  } else if (e.target.matches("[data-prev]")) {
-    incrementor = -1
-  }
-
-  if (incrementor == null) return
-
-  const inputs = [...formSteps[currentStep].querySelectorAll("input")]
-  const allValid = inputs.every(input => input.reportValidity())
-  if (allValid) {
-    currentStep += incrementor
-    showCurrentStep()
-    console.log("show current step" + currentStep)
-  }
-})
-
-function showCurrentStep() {
-  console.log("showing current step")
-  formSteps.forEach((step, index) => {
-    step.classList.toggle("active", index === currentStep)
-  })
-}
+function makeCardActiveByActivityId(activityId) {
+    const activeCard = document.querySelector("div.card.active")
+    activeCard.classList.remove("active")
+    document.querySelector(`div[data-activity-id="${activityId}"]`).classList.add("active")
 }
