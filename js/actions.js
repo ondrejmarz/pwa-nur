@@ -264,7 +264,7 @@ function renderDay(day) {
 
       if(btnUsed == createTimetableBtn) {
         const createTimetableBtn = document.getElementById('create-form-btn');
-        createTimetableBtn.addEventListener('click',  () => renderCreateForm(currentDay.id))
+        createTimetableBtn.addEventListener('click',  () => renderCreateForm(currentDay))
         console.log("on click added")
       }
     }
@@ -314,18 +314,18 @@ function renderActivity(from, to, type ,name, description) {
 
 var previous_header = null;
 var previous_content = null;
-var previous_day_id = null;
+var previous_day = null;
 function backClick() {
   const actionsElement = document.getElementById('day-actions');
   actionsElement.innerHTML = previous_content;
   var div_to_replace = document.getElementById('replace');
   div_to_replace.innerHTML = previous_header;
   const createTimetableBtn = document.getElementById('create-form-btn');
-  createTimetableBtn.addEventListener('click', () => renderCreateForm(previous_day_id))
+  createTimetableBtn.addEventListener('click', () => renderCreateForm(previous_day))
   console.log("on click added")
 }
 
-async function renderCreateForm(id) {
+async function renderCreateForm(day) {
 
   var div_to_replace = document.getElementById('replace');
   previous_header = div_to_replace.innerHTML;
@@ -333,9 +333,11 @@ async function renderCreateForm(id) {
   <span onclick=backClick() id="menuIcon" class="left grey-text text-darken-1">
     <i class="material-icons">arrow_back</i>
   </span>`
-  previous_day_id = id;
+  previous_day = day;
   
-  const lastDay = await loadLastDayOfDayById(id) 
+  const lastDay = await loadLastDayOfDayById(day.id) 
+  console.log("date to create ")
+  console.log(day)
 
   const actionsElement = document.getElementById('day-actions');
   console.log("on click3")
