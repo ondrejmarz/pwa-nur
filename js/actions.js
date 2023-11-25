@@ -325,6 +325,54 @@ function backClick() {
   console.log("on click added")
 }
 
+function submitCreateForm(newDay) {
+  const morningHours = document.getElementById('hours').value;
+  const morningMinutes = document.getElementById('minutes').value;
+
+  const eveningHours = document.getElementById('evening-hours').value;
+  const eveningMinutes = document.getElementById('evening-minutes').value;
+
+  const doWarmUp = document.getElementById('warmup-toggle').checked
+
+  const dopoName = document.getElementById('dopo_name').value;
+  const dopoDescription = document.getElementById('dopo_description').value;
+
+  const odpoName = document.getElementById('odpo_name').value;
+  const odpoDescription = document.getElementById('odpo_description').value;
+
+  const podvecerName = document.getElementById('podvecer_name').value;
+  const podvecerDescription = document.getElementById('podvecer_description').value;
+
+  const vecerniName = document.getElementById('vecerni_name').value;
+  const vecerniDescription = document.getElementById('vecerni_description').value;
+
+  const doNastup = document.getElementById('nastup-toggle').checked
+
+  newDay.doWarmUp = doWarmUp;
+  newDay.doNastup = doNastup;
+  newDay.budik = {
+    seconds:  morningHours * 60 * 60 + morningMinutes * 60,
+    nanoseconds: 0
+  }
+  newDay.vecerka = {
+    seconds:  eveningHours * 60 * 60 + eveningMinutes * 60,
+    nanoseconds: 0
+  }
+  newDay.dopoAction = dopoName;
+  newDay.dopoActionDesc = dopoDescription;
+  newDay.odpoAction = odpoName;
+  newDay.odpoActionDesc = odpoDescription;
+  newDay.podAction = podvecerName;
+  newDay.podActionName = podvecerDescription;
+  newDay.veAction = vecerniName;
+  newDay.veActionDesc = vecerniDescription;
+  newDay.timetableCreated = true;
+
+  //TODO: uložení do databáze
+  console.log(newDay)
+
+}
+
 async function renderCreateForm(day) {
 
   var div_to_replace = document.getElementById('replace');
@@ -341,6 +389,8 @@ async function renderCreateForm(day) {
 
   const actionsElement = document.getElementById('day-actions');
   console.log("on click3")
+
+  var newDay = day;
 
   previous_content = actionsElement.innerHTML;
   actionsElement.innerHTML = `
@@ -376,8 +426,8 @@ async function renderCreateForm(day) {
     <label class="form-text"> 08:15</label><br/>
     <label class="form-text-bold">Rozcvička se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle">
-      <label class="slider" for="toggle">
+      <input class="toggle-checkbox" type="checkbox" id="warmup-toggle">
+      <label class="slider" for="warmup-toggle">
       </label>
     </div><br/>
     <div class="button-container">
@@ -464,8 +514,8 @@ async function renderCreateForm(day) {
     <label class="form-text"> 18:30</label><br/>
     <label class="form-text-bold">Nástup se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle">
-      <label class="slider" for="toggle">
+      <input class="toggle-checkbox" type="checkbox" id="nastup-toggle">
+      <label class="slider" for="nastup-toggle">
       </label>
     </div><br/>
     <div class="button-container">
@@ -505,12 +555,12 @@ async function renderCreateForm(day) {
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
     <div class="input-container">
     <div class="input-column">
-    <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+    <input type="number" id="evening-hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
     <label for="hours">Hodiny</label>
     </div>
     <span>:</span>
     <div class="input-column">
-    <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+    <input type="number" id="evening-minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
     <label for="minutes">Minuty</label>
     </div>
 </div>
@@ -546,6 +596,8 @@ multiStepForm.addEventListener("click", e => {
     incrementor = 1
   } else if (e.target.matches("[data-prev]")) {
     incrementor = -1
+  }else if (e.target.matches("[data-submit]")) {
+    submitCreateForm(newDay)
   }
 
   if (incrementor == null) return
