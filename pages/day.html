@@ -89,7 +89,7 @@
      */
     async function renderListOfDays() {
       const days = await loadAllDaysOfTabor()
-      renderDay(days[0])
+      //renderDay(days[0])
       days.forEach(day => {
         renderDayLiElement(day)
       })
