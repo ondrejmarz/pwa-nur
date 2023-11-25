@@ -262,7 +262,7 @@ function renderDay(day) {
         `
       }
 
-      if (createTimetableBtn) {
+      if(btnUsed == createTimetableBtn) {
         const createTimetableBtn = document.getElementById('create-form-btn');
         createTimetableBtn.addEventListener('click', renderCreateForm)
         console.log("on click added")
