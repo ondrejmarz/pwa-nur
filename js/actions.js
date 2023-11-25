@@ -343,6 +343,15 @@ function renderDay(day) {
         } else if (icon === "arrow") {
             setAppbarIconArrowBack()
         }
+
+        // tohle to je hack, kdyz se vracim z upravy rozvrhu, aby tlacitko upravit znova fungovalo
+        try {
+            const createTimetableBtn = document.getElementById('update-from-btn');
+            createTimetableBtn.addEventListener('click', lastUpravitButtonCallback)
+        } catch (e) {
+
+        }
+
         console.log(lastEntry["appbarTitle"])
         setAppbarTitle(lastEntry["appbarTitle"])
     }
@@ -393,8 +402,11 @@ function renderActivity(from, to, type ,name, description,activityId) {
 
     const createTimetableBtn = document.getElementById('update-from-btn');
     console.log("current day: ", currentDay)
-    createTimetableBtn.addEventListener('click', () => renderUpdateForm(currentDay.previous_day_id,activityId, currentDay.day + " " + currentDay.date, activityId))
+    lastUpravitButtonCallback = () => renderUpdateForm(currentDay.previous_day_id,activityId, currentDay.day + " " + currentDay.date, activityId)
+    createTimetableBtn.addEventListener('click', lastUpravitButtonCallback)
 }
+
+let lastUpravitButtonCallback
 
 var previous_header = null;
 var previous_content = null;
