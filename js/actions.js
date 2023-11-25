@@ -1,30 +1,56 @@
 // tohle to je proto, aby fungovala sipka zpatky.
 // k zapamatovani, kde byla appka naposled
 const historyQueue = []
-function generateEmptyDayData() {
+function getDayFromForm() {
     return {
         doWarmUp: true,
-        podAction: "",
+        podAction: document.getElementById("podvecer_description").value,
         budik: {
             seconds: 1700722800,
             nanoseconds: 798000000
         },
-        odpoActionDesc: "",
+        odpoActionDesc:  document.getElementById("odpo_description").value,
         doNastup: true,
-        veActionDesc: "",
+        veActionDesc:  document.getElementById("vecerni_description").value,
         timetableCreated: false,
         vecerka: {
             seconds: 1700773200,
             nanoseconds: 342000000
         },
-        dopoAction: "",
-        odpoAction: "",
-        veAction: "",
-        podActionName: "",
+        dopoAction:  document.getElementById("dopo_name").value,
+        odpoAction:  document.getElementById("odpo_name").value,
+        veAction:  document.getElementById("vecerni_name").value,
+        podActionName:  document.getElementById("podvecer_name").value,
         date: "13.7.",
-        day: "Pondělí",
-        dopoActionDesc: "",
+        day: currentDay.day,
+        dopoActionDesc:  document.getElementById("dopo_description").value,
     }
+}
+
+function generateEmptyDayData() {
+  return {
+      doWarmUp: true,
+      podAction: "",
+      budik: {
+          seconds: 1700722800,
+          nanoseconds: 798000000
+      },
+      odpoActionDesc: "",
+      doNastup: true,
+      veActionDesc: "",
+      timetableCreated: false,
+      vecerka: {
+          seconds: 1700773200,
+          nanoseconds: 342000000
+      },
+      dopoAction: "",
+      odpoAction: "",
+      veAction: "",
+      podActionName: "",
+      date: "13.7.",
+      day: "Pondělí",
+      dopoActionDesc: "",
+  }
 }
 
 let spanHoldingIcon = document.getElementById("icon-holder")
@@ -50,29 +76,36 @@ function timestampToHHMM(timestamp, addMM) {
   return formattedTime;
 }
 
+function saveDataToDb(){
+  let newDay = getDayFromForm();
+  console.log(newDay)
+  //TODO here save data to db
+  renderDay(currentDay);
+}
+
 function goToDetail(activityId){
   console.log(currentDay)
   switch (activityId) {
     case 1:
-      renderActivity("10:00","11:00","Budíček",currentDay.dopoAction,currentDay.dopoActionDesc)
+      renderActivity("8:00","8:15","Budíček","","",activityId) // todo update
       break;
     case 2:
-      renderActivity("10:00","11:00","Rozcvička",currentDay.dopoAction,currentDay.dopoActionDesc)
+      renderActivity("8:15","8:30","Rozcvička","","",activityId) // todo update
       break;
     case 3:
-      renderActivity("10:00","11:00","Dopolední aktivita",currentDay.dopoAction,currentDay.dopoActionDesc)
+      renderActivity("10:00","12:00","Dopolední aktivita",currentDay.dopoAction,currentDay.dopoActionDesc,activityId)
       break;
     case 4:
-      renderActivity("10:00","11:00","Odpolední aktivita",currentDay.odpoAction,currentDay.odpoActionDesc)
+      renderActivity("14:30","16:00","Odpolední aktivita",currentDay.odpoAction,currentDay.odpoActionDesc,activityId)
       break;
     case 5:
-      renderActivity("10:00","11:00","Podvečerní aktivita",currentDay.podAction,currentDay.podActionName)
+      renderActivity("17:00","19:00","Podvečerní aktivita",currentDay.podAction,currentDay.podActionName,activityId)
       break;
     case 6:
-      renderActivity("10:00","11:00","Večerka",currentDay.veAction,currentDay.veActionDesc)
+      renderActivity("20:00","21:45","Večerní aktivita",currentDay.veAction,currentDay.veActionDesc,activityId)
       break;
     case 7:
-      renderActivity("10:00","11:00","Večerka",currentDay.dopoAction,currentDay.dopoActionDesc)
+      renderActivity("22:00","8:00","Večerka","","",activityId)//todo update 
       break;
     default:
       break;
@@ -311,7 +344,7 @@ function renderDay(day) {
         setAppbarTitle(lastEntry["appbarTitle"])
     }
 
-function renderActivity(from, to, type ,name, description) {
+function renderActivity(from, to, type ,name, description,activityId) {
 
     const actionsElement = document.getElementById('day-actions');
     historyQueue.push({"html": actionsElement.outerHTML, "icon": "hamburger", "appbarTitle": document.getElementById("appbar-title").innerText})
@@ -349,11 +382,14 @@ function renderActivity(from, to, type ,name, description) {
       </div>
     </div>
   </div>
-  <div class="btn-floating-update-actvity btn-large add-btn sidenav-trigger">
+  <div id="update-from-btn" class="btn-floating-update-actvity btn-large add-btn sidenav-trigger")">
   <div class="label-text-wrapper"><div class="label-text">Upravit</div></div>
   </div>
   </div>
         `
+
+    const createTimetableBtn = document.getElementById('update-from-btn');
+    createTimetableBtn.addEventListener('click', () => renderUpdateForm(currentDay.previous_day_id,activityId))
 }
 
 var previous_header = null;
@@ -370,7 +406,6 @@ function backClick() {
 }
 
 async function renderCreateForm(id) {
-
   var div_to_replace = document.getElementById('replace');
   previous_header = div_to_replace.innerHTML;
   div_to_replace.innerHTML = ` <span id="appbar-title">Tvorba rozvrhu</span>
@@ -560,7 +595,7 @@ async function renderCreateForm(id) {
       <div class="right">
         <a class="btn-large add-btn" data-prev>Předchozí</a>
       </div>
-      <div class="right">
+      <div onClick="saveDataToDb()" class="right">
         <a class="btn-large add-btn" data-submit>Uložit</a>
       </div>
     </div>
@@ -607,6 +642,248 @@ formSteps.forEach(step => {
     e.target.classList.toggle("hide", !e.target.classList.contains("active"))
   })
 }) */
+
+function showCurrentStep() {
+  console.log("showing current step")
+  formSteps.forEach((step, index) => {
+    step.classList.toggle("active", index === currentStep)
+  })
+}
+}
+
+
+
+
+async function renderUpdateForm(id, activityId) {
+  var div_to_replace = document.getElementById('replace');
+  previous_header = div_to_replace.innerHTML;
+  div_to_replace.innerHTML = ` <span id="appbar-title">Uprava rozvrhu</span>
+  <span onclick=backClick() id="menuIcon" class="left grey-text text-darken-1">
+    <i class="material-icons">arrow_back</i>
+  </span>`
+  previous_day_id = id;
+  console.log(previous_day_id)
+  //const lastDay = await loadLastDayOfDayById(id) 
+
+  const actionsElement = document.getElementById('day-actions');
+  console.log("on click3")
+
+  previous_content = actionsElement.innerHTML;
+  actionsElement.innerHTML = `
+  <div>
+  <form data-multi-step class="multi-step-form">
+  <div class="card active" data-step>
+    <label class="form-title" >Ranní budík</label><br/> 
+    <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(currentDay.vecerka, 0)}</label><br/>
+    <div class="input-container">
+        <div class="input-column">
+        <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+        <label for="hours">Hodiny</label>
+        </div>
+        <span>:</span>
+        <div class="input-column">
+        <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+        <label for="minutes">Minuty</label>
+        </div>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn">Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Ranní rozcvička</label><br/>
+    <label class="form-text">Ranní rozcvička 15 minut po budíku.</label><br/>
+    <label class="form-text-bold">Čas:</label>
+    <label class="form-text"> 08:15</label><br/>
+    <label class="form-text-bold">Rozcvička se bude konat: </label>
+    <div class="toggle-checkbox-wrapper">
+      <input value="${currentDay.doWarmUp}" class="toggle-checkbox" type="checkbox" id="toggle">
+      <label class="slider" for="toggle">
+      </label>
+    </div><br/>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Dopolední činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 10:00</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> 12:00</label><br/>
+    <div class="input-field">
+      <input value="${currentDay.dopoAction}" type="text" id="dopo_name" name="name"><br>
+      <label for="dopo_name" class="form-text"> Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input  value="${currentDay.dopoActionDesc}" type="text" id="dopo_description" name="description"><br>
+      <label for="dopo_description" class="form-text">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Odpolední činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 14:30</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> 16:00</label><br/>
+    <div class="input-field">
+      <input value="${currentDay.dopoAction}" type="text" id="odpo_name" name="name">
+      <label for="odpo_name">Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input value="${currentDay.odpoActionDesc}" type="text" id="odpo_description" name="description">
+      <label for="odpo_description">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Podvečerní činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 16:30</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> 18:00</label><br/>
+    <div class="input-field">
+      <input value="${currentDay.podActionName}" type="text" id="podvecer_name" name="name">
+      <label for="podvecer_name">Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input value="${currentDay.podAction}" type="text" id="podvecer_description" name="description">
+      <label for="podvecer_description">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Večerní nástup</label><br/>
+    <label class="form-text-bold">Čas:</label>
+    <label class="form-text"> 18:30</label><br/>
+    <label class="form-text-bold">Nástup se bude konat: </label>
+    <div class="toggle-checkbox-wrapper">
+      <input class="toggle-checkbox" type="checkbox" id="toggle">
+      <label class="slider" for="toggle">
+      </label>
+    </div><br/>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title">Večerní činnost</label><br/>
+    <label class="form-text-bold">Čas od:</label>
+    <label class="form-text"> 20:00</label><br/>
+    <label class="form-text-bold">Čas do:</label>
+    <label class="form-text"> půl hodiny před večerkou</label><br/>
+    <div class="input-field">
+      <input value="${currentDay.veAction}" type="text" id="vecerni_name" name="name">
+      <label for="vecerni_name">Název činnosti</label>
+    </div>
+    <div class="input-field">
+      <input value="${currentDay.veActionDesc}"type="text" id="vecerni_description" name="description">
+      <label for="vecerni_description">Popis činnosti</label>
+    </div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div class="right">
+        <a class="btn-large add-btn" data-next>Další</a>
+      </div>
+    </div>
+  </div>
+  <div class="card" data-step>
+    <label class="form-title" >Večerka</label><br/>
+    <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(currentDay.vecerka, 0)}</label><br/>
+    <div class="input-container">
+    <div class="input-column">
+    <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+    <label for="hours">Hodiny</label>
+    </div>
+    <span>:</span>
+    <div class="input-column">
+    <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+    <label for="minutes">Minuty</label>
+    </div>
+</div>
+    <div class="button-container">
+      <div class="right">
+        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      </div>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn" data-submit>Uložit</a>
+      </div>
+    </div>
+  </div>
+  </form>
+ </div>
+  `;
+
+  console.log("script loaded")
+const multiStepForm = document.querySelector("[data-multi-step]")
+const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
+let currentStep = formSteps.findIndex(step => {
+  return step.classList.contains("active")
+})
+currentStep = activityId - 1;
+if (currentStep < 0) {
+  currentStep = 0
+  showCurrentStep()
+}
+
+multiStepForm.addEventListener("click", e => {
+  console.log("script loaded 1")
+  let incrementor
+  if (e.target.matches("[data-next]")) {
+    incrementor = 1
+  } else if (e.target.matches("[data-prev]")) {
+    incrementor = -1
+  }
+
+  if (incrementor == null) return
+
+  const inputs = [...formSteps[currentStep].querySelectorAll("input")]
+  const allValid = inputs.every(input => input.reportValidity())
+  if (allValid) {
+    currentStep += incrementor
+    showCurrentStep()
+    console.log("show current step" + currentStep)
+  }
+})
 
 function showCurrentStep() {
   console.log("showing current step")
