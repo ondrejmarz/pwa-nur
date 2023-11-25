@@ -330,7 +330,7 @@ function renderDay(day) {
 
     function goToLastHtml() {
         const actionsElement = document.getElementById('day-actions');
-        const lastEntry = historyQueue.shift()
+        const lastEntry = historyQueue.pop()
         const html = lastEntry["html"]
         const icon = lastEntry["icon"]
         actionsElement.innerHTML = html
@@ -389,7 +389,8 @@ function renderActivity(from, to, type ,name, description,activityId) {
         `
 
     const createTimetableBtn = document.getElementById('update-from-btn');
-    createTimetableBtn.addEventListener('click', () => renderUpdateForm(currentDay.previous_day_id,activityId))
+    console.log("current day: ", currentDay)
+    createTimetableBtn.addEventListener('click', () => renderUpdateForm(currentDay.previous_day_id,activityId, currentDay.day + " " + currentDay.date))
 }
 
 var previous_header = null;
@@ -654,21 +655,16 @@ function showCurrentStep() {
 
 
 
-async function renderUpdateForm(id, activityId) {
-  var div_to_replace = document.getElementById('replace');
-  previous_header = div_to_replace.innerHTML;
-  div_to_replace.innerHTML = ` <span id="appbar-title">Uprava rozvrhu</span>
-  <span onclick=backClick() id="menuIcon" class="left grey-text text-darken-1">
-    <i class="material-icons">arrow_back</i>
-  </span>`
-  previous_day_id = id;
-  console.log(previous_day_id)
-  //const lastDay = await loadLastDayOfDayById(id) 
+async function renderUpdateForm(id, activityId, appbarTitle) {
+  //const lastDay = await loadLastDayOfDayById(id)
 
   const actionsElement = document.getElementById('day-actions');
   console.log("on click3")
+    historyQueue.push({"html": actionsElement.outerHTML, "icon": "arrow", "appbarTitle": document.getElementById("appbar-title").innerText})
+    setAppbarIconArrowBack()
 
-  previous_content = actionsElement.innerHTML;
+    setAppbarTitle("Úprava rozvrhu " + appbarTitle)
+
   actionsElement.innerHTML = `
   <div>
   <form data-multi-step class="multi-step-form">
