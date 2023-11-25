@@ -264,7 +264,7 @@ function renderDay(day) {
 
       if(btnUsed == createTimetableBtn) {
         const createTimetableBtn = document.getElementById('create-form-btn');
-        createTimetableBtn.addEventListener('click', renderCreateForm)
+        createTimetableBtn.addEventListener('click',  () => renderCreateForm(currentDay.id))
         console.log("on click added")
       }
     }
@@ -314,17 +314,18 @@ function renderActivity(from, to, type ,name, description) {
 
 var previous_header = null;
 var previous_content = null;
+var previous_day_id = null;
 function backClick() {
   const actionsElement = document.getElementById('day-actions');
   actionsElement.innerHTML = previous_content;
   var div_to_replace = document.getElementById('replace');
   div_to_replace.innerHTML = previous_header;
   const createTimetableBtn = document.getElementById('create-form-btn');
-  createTimetableBtn.addEventListener('click', renderCreateForm)
+  createTimetableBtn.addEventListener('click', () => renderCreateForm(previous_day_id))
   console.log("on click added")
 }
 
-function renderCreateForm() {
+async function renderCreateForm(id) {
 
   var div_to_replace = document.getElementById('replace');
   previous_header = div_to_replace.innerHTML;
@@ -332,9 +333,9 @@ function renderCreateForm() {
   <span onclick=backClick() id="menuIcon" class="left grey-text text-darken-1">
     <i class="material-icons">arrow_back</i>
   </span>`
+  previous_day_id = id;
   
-
-  console.log("on click2")
+  const lastDay = await loadLastDayOfDayById(id) 
 
   const actionsElement = document.getElementById('day-actions');
   console.log("on click3")
@@ -345,7 +346,7 @@ function renderCreateForm() {
   <form data-multi-step class="multi-step-form">
   <div class="card active" data-step>
     <label class="form-title" >Ranní budík</label><br/> 
-    <label class="form-text">Čas včerejší večerky: TODO</label><br/>  <!-- TODO z db -->
+    <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
     <div class="input-field">
       <input type="text" id="cas_budiku" name="name">
       <label for="cas_budiku">Čas budíku</label>
@@ -494,7 +495,7 @@ function renderCreateForm() {
   </div>
   <div class="card" data-step>
     <label class="form-title" >Večerka</label><br/>
-    <label class="form-text">Čas včerejší večerky: TODO</label><br/>  <!-- TODO z db -->
+    <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
     <div class="input-field">
       <input type="text" id="cas_vecerky" name="name">
       <label for="cas_vecerky">Čas večerky</label>

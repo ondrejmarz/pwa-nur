@@ -95,6 +95,42 @@
       })
     }
     renderListOfDays()
+
+  async function loadLastDayOfDay(day) {
+  console.log(day)
+  const lastDayId = day["lastDayId"]
+  if (lastDayId === "") {
+    console.log("day is first")
+  }
+
+  return daysCollection.doc(lastDayId).get()
+          .then(res => {
+            const dayData = res.data()
+            dayData["id"] = res.id
+            return dayData
+          })
+          .catch(e => {
+            console.error("Error while loading last day of day with id", dayId)
+            console.error(e)
+          })
+}
+async function loadLastDayOfDayById(dayId) {
+  const lastDayId = dayId
+  if (lastDayId === "") {
+    console.log("day is first")
+  }
+
+  return daysCollection.doc(lastDayId).get()
+          .then(res => {
+            const dayData = res.data()
+            dayData["id"] = res.id
+            return dayData
+          })
+          .catch(e => {
+            console.error("Error while last day of day with id", dayId)
+            console.error(e)
+          })
+}
   </script>
 
   <!-- side nav -->
