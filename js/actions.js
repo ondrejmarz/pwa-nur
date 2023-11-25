@@ -1,3 +1,6 @@
+// tohle to je proto, aby fungovala sipka zpatky.
+// k zapamatovani, kde byla appka naposled
+const historyQueue = []
 function generateEmptyDayData() {
     return {
         doWarmUp: true,
@@ -23,6 +26,15 @@ function generateEmptyDayData() {
         dopoActionDesc: "",
     }
 }
+
+let spanHoldingIcon = document.getElementById("icon-holder")
+const hamburger = document.createElement("i")
+hamburger.className = "material-icons sidenav-trigger"
+hamburger.setAttribute("data-target", "side-menu")
+hamburger.innerText = "menu"
+const arrowBack = document.createElement("i")
+arrowBack.className = "material-icons"
+arrowBack.innerText = "arrow_back"
 
 function timestampToHHMM(timestamp, addMM) {
   // Převedení Timestamp na objekt Date
@@ -72,7 +84,7 @@ return;
 // Vypíše rozvrh na celý den, parametr day obsahuje všechny informace, na kterých rozvrh závisí
 // Na konci vykresluje tlačítko k archivaci
 function renderDay(day) {
-    document.getElementById("appbar-title").innerText = day.day + " " + day.date
+    setAppbarTitle(day.day + " " + day.date)
     currentDay = day;
   const actionsElement = document.getElementById('day-actions');
     day.dopoAction = day.dopoAction === "" ? "Dopolední akce (k vyplnění)": day.dopoAction
@@ -269,12 +281,44 @@ function renderDay(day) {
       }
     }
 
+    function setAppbarTitle(name) {
+        const appbarTitleElement = document.getElementById("appbar-title")
+        appbarTitleElement.innerText = name
+    }
+    function setAppbarIconArrowBack() {
+        document.getElementById("icon-holder").innerHTML = arrowBack.outerHTML
+        document.getElementById("icon-holder").addEventListener("click", goToLastHtml)
+    }
+
+    function setAppbarIconHamburger() {
+        document.getElementById("icon-holder").innerHTML = hamburger.outerHTML
+        document.getElementById("icon-holder").removeEventListener("click", goToLastHtml)
+    }
+
+    function goToLastHtml() {
+        const actionsElement = document.getElementById('day-actions');
+        const lastEntry = historyQueue.shift()
+        const html = lastEntry["html"]
+        const icon = lastEntry["icon"]
+        actionsElement.innerHTML = html
+
+        if (icon === "hamburger") {
+            setAppbarIconHamburger()
+        } else if (icon === "arrow") {
+            setAppbarIconArrowBack()
+        }
+        console.log(lastEntry["appbarTitle"])
+        setAppbarTitle(lastEntry["appbarTitle"])
+    }
 
 function renderActivity(from, to, type ,name, description) {
 
-  const actionsElement = document.getElementById('day-actions');
+    const actionsElement = document.getElementById('day-actions');
+    historyQueue.push({"html": actionsElement.outerHTML, "icon": "hamburger", "appbarTitle": document.getElementById("appbar-title").innerText})
+    setAppbarIconArrowBack()
 
-  actionsElement.innerHTML = `
+    setAppbarTitle("Detail aktivity " + type)
+     actionsElement.innerHTML =  `
   <body>
   <div class="odpoledn-innost">
     <div class="div">
