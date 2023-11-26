@@ -80,9 +80,11 @@ function saveDataToDb(){
   updateOrCreateDayInDb(newDay)
   renderDay(newDay); // vyrendruje nový den z memory, takže to bude updated i kdyby failnula db... nevím jestli to tak chceme?
 }
+let lastActivityId
 
 function goToDetail(activityId){
   console.log(currentDay)
+    lastActivityId = activityId
   switch (activityId) {
     case 1:
       renderActivity("8:00","8:15","Budíček","","",activityId) // todo update
@@ -934,9 +936,15 @@ const discardChangesButton = document.getElementById("discard-changes-button")
 
 saveChangesButton.addEventListener("click", () => {
     console.log("should aoeuaoeu")
-    saveDataToDb()
-    historyQueue.pop()
-    historyQueue.pop()
+    if (isEditTimetable()) {
+        saveDataToDb()
+        goToDetail(lastActivityId)
+        historyQueue.pop()
+    } else if (isCreateTimetable()) {
+        saveDataToDb()
+        // historyQueue.pop()
+        // historyQueue.pop()
+    }
     modal.style.display = "none"
 })
 discardChangesButton.addEventListener("click", () => {
