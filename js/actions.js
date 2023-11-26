@@ -117,6 +117,7 @@ function goToDetail(activityId){
 return;
 }
 
+
 // Vypíše rozvrh na celý den, parametr day obsahuje všechny informace, na kterých rozvrh závisí
 // Na konci vykresluje tlačítko k archivaci
 function renderDay(day) {
@@ -139,7 +140,7 @@ function renderDay(day) {
 
     const archiveButton = `
               <div class="right">
-                <a class="btn-large add-btn sidenav-trigger" data-target="archivate">Archivovat</a>
+                <a class="btn-large add-btn sidenav-trigger" data-target="archivate" onclick="archivovatModal()">Archivovat</a>
               </div>
     `
     const btnUsed = day.timetableCreated ? archiveButton : createTimetableBtn
@@ -906,16 +907,24 @@ function makeCardActiveByActivityId(activityId) {
 const openModalBtn = document.getElementById("icon-holder");
 
 const closeModalBtn = document.getElementById("close");
+const closeModalArchivovatBtn = document.getElementById("close-archivovat");
 const modal = document.getElementById("Modal");
+const archiveModal = document.getElementById("ModalArchivovat")
 
 
 closeModalBtn.addEventListener("click", function () {
     modal.style.display = "none";
 });
+closeModalArchivovatBtn.addEventListener("click", function () {
+    archiveModal.style.display = "none";
+});
 
 window.addEventListener("click", function (event) {
     if (event.target === modal) {
         modal.style.display = "none";
+    }
+    if (event.target === archiveModal) {
+        archiveModal.style.display = "none"
     }
 });
 
@@ -933,6 +942,7 @@ function isEditTimetable() {
 
 const saveChangesButton = document.getElementById("save-changes-button")
 const discardChangesButton = document.getElementById("discard-changes-button")
+const archiveOkButton = document.getElementById("modal-ok-button")
 
 saveChangesButton.addEventListener("click", () => {
     console.log("should aoeuaoeu")
@@ -952,3 +962,10 @@ discardChangesButton.addEventListener("click", () => {
     goToLastHtml()
     modal.style.display = "none"
 })
+archiveOkButton.addEventListener("click", () => {
+    archiveModal.style.display = "none"
+})
+function archivovatModal() {
+    archiveModal.style.display = "flex"
+}
+
