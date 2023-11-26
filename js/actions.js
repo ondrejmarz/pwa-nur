@@ -667,9 +667,6 @@ function showCurrentStep() {
 }
 }
 
-
-
-
 async function renderUpdateForm(id, activityId, appbarTitle) {
   //const lastDay = await loadLastDayOfDayById(id)
 
@@ -732,13 +729,13 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 10:00</label><br/>
     <label class="form-text-bold">Čas do:</label>
     <label class="form-text"> 12:00</label><br/>
-    <div class="input-field">
-      <input value="${currentDay.dopoAction}" type="text" id="dopo_name" name="name"><br>
+    <div class="input-field-active">
       <label for="dopo_name" class="form-text"> Název činnosti</label>
+      <input value="${currentDay.dopoAction}" type="text" id="dopo_name" name="name"><br>
     </div>
-    <div class="input-field">
-      <input  value="${currentDay.dopoActionDesc}" type="text" id="dopo_description" name="description"><br>
+    <div class="input-field-active">
       <label for="dopo_description" class="form-text">Popis činnosti</label>
+      <input  value="${currentDay.dopoActionDesc}" type="text" id="dopo_description" name="description"><br>
     </div>
     <div class="button-container">
       <div class="right">
@@ -755,13 +752,13 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 14:30</label><br/>
     <label class="form-text-bold">Čas do:</label>
     <label class="form-text"> 16:00</label><br/>
-    <div class="input-field">
-      <input value="${currentDay.dopoAction}" type="text" id="odpo_name" name="name">
+    <div class="input-field-active">
       <label for="odpo_name">Název činnosti</label>
+      <input value="${currentDay.odpoAction}" type="text" id="odpo_name" name="name">
     </div>
-    <div class="input-field">
-      <input value="${currentDay.odpoActionDesc}" type="text" id="odpo_description" name="description">
+    <div class="input-field-active">
       <label for="odpo_description">Popis činnosti</label>
+      <input value="${currentDay.odpoActionDesc}" type="text" id="odpo_description" name="description">
     </div>
     <div class="button-container">
       <div class="right">
@@ -778,13 +775,13 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 16:30</label><br/>
     <label class="form-text-bold">Čas do:</label>
     <label class="form-text"> 18:00</label><br/>
-    <div class="input-field">
-      <input value="${currentDay.podActionName}" type="text" id="podvecer_name" name="name">
+    <div class="input-field-active">
       <label for="podvecer_name">Název činnosti</label>
+      <input value="${currentDay.podActionName}" type="text" id="podvecer_name" name="name">
     </div>
-    <div class="input-field">
-      <input value="${currentDay.podAction}" type="text" id="podvecer_description" name="description">
+    <div class="input-field-active">
       <label for="podvecer_description">Popis činnosti</label>
+      <input value="${currentDay.podAction}" type="text" id="podvecer_description" name="description">
     </div>
     <div class="button-container">
       <div class="right">
@@ -805,6 +802,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       <label class="slider" for="toggle">
       </label>
     </div><br/>
+
     <div class="button-container">
       <div class="right">
         <a class="btn-large add-btn" data-prev>Předchozí</a>
@@ -820,13 +818,13 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 20:00</label><br/>
     <label class="form-text-bold">Čas do:</label>
     <label class="form-text"> půl hodiny před večerkou</label><br/>
-    <div class="input-field">
-      <input value="${currentDay.veAction}" type="text" id="vecerni_name" name="name">
+    <div class="input-field-active">
       <label for="vecerni_name">Název činnosti</label>
+      <input value="${currentDay.veAction}" type="text" id="vecerni_name" name="name">
     </div>
-    <div class="input-field">
-      <input value="${currentDay.veActionDesc}"type="text" id="vecerni_description" name="description">
+    <div cclass="input-field-active">
       <label for="vecerni_description">Popis činnosti</label>
+      <input value="${currentDay.veActionDesc}"type="text" id="vecerni_description" name="description">
     </div>
     <div class="button-container">
       <div class="right">
@@ -865,6 +863,24 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
   `;
 
     makeCardActiveByActivityId(activityId)
+
+  const multiStepForm = document.querySelector("[data-multi-step]")
+
+  multiStepForm.addEventListener("click", e => {
+    console.log("script loaded 1")
+    let incrementor
+    if (e.target.matches("[data-next]")) {
+      incrementor = 1
+    } else if (e.target.matches("[data-prev]")) {
+      incrementor = -1
+    }
+  
+    if (incrementor == null) return
+  
+      activityId += incrementor
+      makeCardActiveByActivityId(activityId)
+  })
+
 }
 
 function makeCardActiveByActivityId(activityId) {
