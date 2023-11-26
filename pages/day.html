@@ -64,6 +64,20 @@
                 console.error(error)
               });
     }
+
+
+  async function updateOrCreateDayInDb(day) {
+    console.log(day)
+    //Get Reference to data
+    const documentRef = daysCollection.doc(day.id);
+    if (documentRef == null)
+      daysCollection.push(data);
+    else{
+      documentRef.update(day);
+      }
+  }
+
+
     /**
      * Toto vygeneruje do navbaru rozklikatka na jednotlive dny
      * @param day

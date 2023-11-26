@@ -1,27 +1,23 @@
 // tohle to je proto, aby fungovala sipka zpatky.
 // k zapamatovani, kde byla appka naposled
 const historyQueue = []
+//Toto taha data z formulářů a do formátu pro DB
 function getDayFromForm() {
     return {
-        doWarmUp: true,
+        id:currentDay.id,
+        doWarmUp: document.getElementById("toggle-rozcvicka").value, // nefunguje jak má asi je ještě potřeba nějaká transformace?
         podAction: document.getElementById("podvecer_description").value,
-        budik: {
-            seconds: 1700722800,
-            nanoseconds: 798000000
-        },
+        budik: currentDay.budik,
         odpoActionDesc:  document.getElementById("odpo_description").value,
-        doNastup: true,
+        doNastup: document.getElementById("toggle-nastup").value,
         veActionDesc:  document.getElementById("vecerni_description").value,
-        timetableCreated: false,
-        vecerka: {
-            seconds: 1700773200,
-            nanoseconds: 342000000
-        },
+        timetableCreated: true,
+        vecerka: currentDay.vecerka,
         dopoAction:  document.getElementById("dopo_name").value,
         odpoAction:  document.getElementById("odpo_name").value,
         veAction:  document.getElementById("vecerni_name").value,
         podActionName:  document.getElementById("podvecer_name").value,
-        date: "13.7.",
+        date: currentDay.date,
         day: currentDay.day,
         dopoActionDesc:  document.getElementById("dopo_description").value,
     }
@@ -76,11 +72,12 @@ function timestampToHHMM(timestamp, addMM) {
   return formattedTime;
 }
 
+//upravuje mělo by i vytvářet nové záznamy
 function saveDataToDb(){
   let newDay = getDayFromForm();
   console.log(newDay)
-  //TODO here save data to db
-  renderDay(currentDay);
+  updateOrCreateDayInDb(newDay)
+  renderDay(newDay); // vyrendruje nový den z memory, takže to bude updated i kdyby failnula db... nevím jestli to tak chceme?
 }
 
 function goToDetail(activityId){
@@ -469,8 +466,8 @@ async function renderCreateForm(id) {
     <label class="form-text"> 08:15</label><br/>
     <label class="form-text-bold">Rozcvička se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle">
-      <label class="slider" for="toggle">
+      <input class="toggle-checkbox" type="checkbox" id="toggle-rozcvicka">
+      <label class="slider" for="toggle-rozcvicka">
       </label>
     </div><br/>
     <div class="button-container">
@@ -557,8 +554,8 @@ async function renderCreateForm(id) {
     <label class="form-text"> 18:30</label><br/>
     <label class="form-text-bold">Nástup se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle">
-      <label class="slider" for="toggle">
+      <input class="toggle-checkbox" type="checkbox" id="toggle-nastup">
+      <label class="slider" for="toggle-nastup">
       </label>
     </div><br/>
     <div class="button-container">
@@ -710,8 +707,8 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 08:15</label><br/>
     <label class="form-text-bold">Rozcvička se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input value="${currentDay.doWarmUp}" class="toggle-checkbox" type="checkbox" id="toggle">
-      <label class="slider" for="toggle">
+      <input value="${currentDay.doWarmUp}" class="toggle-checkbox" type="checkbox" id="toggle-rozcvicka">
+      <label class="slider" for="toggle-rozcvicka">
       </label>
     </div><br/>
     <div class="button-container">
@@ -798,8 +795,8 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 18:30</label><br/>
     <label class="form-text-bold">Nástup se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle">
-      <label class="slider" for="toggle">
+      <input class="toggle-checkbox" type="checkbox" id="toggle-nastup">
+      <label class="slider" for="toggle-nastup">
       </label>
     </div><br/>
 
