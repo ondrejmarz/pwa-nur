@@ -3,10 +3,11 @@
 const historyQueue = []
 //Toto taha data z formulářů a do formátu pro DB
 function getDayFromForm() {
+
     return {
         id:currentDay.id,
         doWarmUp: document.getElementById("toggle-rozcvicka").value, // nefunguje jak má asi je ještě potřeba nějaká transformace?
-        podAction: document.getElementById("podvecer_description").value,
+        podAction: document.getElementById("podvecer_name").value,
         budik: currentDay.budik,
         odpoActionDesc:  document.getElementById("odpo_description").value,
         doNastup: document.getElementById("toggle-nastup").value,
@@ -16,7 +17,7 @@ function getDayFromForm() {
         dopoAction:  document.getElementById("dopo_name").value,
         odpoAction:  document.getElementById("odpo_name").value,
         veAction:  document.getElementById("vecerni_name").value,
-        podActionName:  document.getElementById("podvecer_name").value,
+        podActionName:  document.getElementById("podvecer_description").value,
         date: currentDay.date,
         day: currentDay.day,
         dopoActionDesc:  document.getElementById("dopo_description").value,
@@ -117,13 +118,16 @@ return;
 // Vypíše rozvrh na celý den, parametr day obsahuje všechny informace, na kterých rozvrh závisí
 // Na konci vykresluje tlačítko k archivaci
 function renderDay(day) {
+
     setAppbarTitle(day.day + " " + day.date)
+    setAppbarIconHamburger()
     currentDay = day;
   const actionsElement = document.getElementById('day-actions');
     day.dopoAction = day.dopoAction === "" ? "Dopolední akce (k vyplnění)": day.dopoAction
     day.podAction = day.podAction === "" ? "Podvečerní akce (k vyplnění)": day.podAction
     day.odpoAction = day.odpoAction === "" ? "Odpolední akce (k vyplnění)": day.odpoAction
     day.veAction = day.veAction === "" ? "Večerní akce (k vyplnění)": day.veAction
+
 
     const createTimetableBtn = `
           <div class="right">
@@ -312,6 +316,9 @@ function renderDay(day) {
         createTimetableBtn.addEventListener('click',  () => renderCreateForm(currentDay.id))
         console.log("on click added")
       }
+
+        historyQueue.length = 0 // reset historyQueue
+        historyQueue.push({"html": actionsElement.outerHTML, "icon": "hamburger", "appbarTitle": document.getElementById("appbar-title").innerText})
     }
 
     function setAppbarTitle(name) {
@@ -320,12 +327,13 @@ function renderDay(day) {
     }
     function setAppbarIconArrowBack() {
         document.getElementById("icon-holder").innerHTML = arrowBack.outerHTML
-        document.getElementById("icon-holder").addEventListener("click", goToLastHtml)
+        document.getElementById("icon-holder").addEventListener("click", arrowBackClick)
+        console.log("ouoeu")
     }
 
     function setAppbarIconHamburger() {
         document.getElementById("icon-holder").innerHTML = hamburger.outerHTML
-        document.getElementById("icon-holder").removeEventListener("click", goToLastHtml)
+        document.getElementById("icon-holder").removeEventListener("click", arrowBackClick)
     }
 
     function goToLastHtml() {
@@ -352,6 +360,18 @@ function renderDay(day) {
         console.log(lastEntry["appbarTitle"])
         setAppbarTitle(lastEntry["appbarTitle"])
     }
+
+    function arrowBackClick() {
+        console.log("arrow back click")
+        if (isCreateTimetableOrEditing()) {
+            console.log("is create rozvrh")
+            modal.style.display = "flex";
+            return
+        } else {
+            goToLastHtml()
+        }
+    }
+
 
 function renderActivity(from, to, type ,name, description,activityId) {
 
@@ -419,13 +439,8 @@ function backClick() {
 }
 
 async function renderCreateForm(id) {
-  var div_to_replace = document.getElementById('replace');
-  previous_header = div_to_replace.innerHTML;
-  div_to_replace.innerHTML = ` <span id="appbar-title">Tvorba rozvrhu</span>
-  <span onclick=backClick() id="menuIcon" class="left grey-text text-darken-1">
-    <i class="material-icons">arrow_back</i>
-  </span>`
-  previous_day_id = id;
+  setAppbarIconArrowBack()
+    setAppbarTitle("Tvorba rozvrhu")
   
   const lastDay = await loadLastDayOfDayById(id) 
 
@@ -885,3 +900,47 @@ function makeCardActiveByActivityId(activityId) {
     activeCard.classList.remove("active")
     document.querySelector(`div[data-activity-id="${activityId}"]`).classList.add("active")
 }
+
+const openModalBtn = document.getElementById("icon-holder");
+
+const closeModalBtn = document.getElementById("close");
+const modal = document.getElementById("Modal");
+
+
+closeModalBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+function isCreateTimetableOrEditing() {
+    return isCreateTimetable() || isEditTimetable()
+}
+
+function isCreateTimetable() {
+    return document.getElementById("appbar-title").textContent.includes("Tvorba")
+}
+
+function isEditTimetable() {
+    return document.getElementById("appbar-title").textContent.includes("Úprava")
+}
+
+const saveChangesButton = document.getElementById("save-changes-button")
+const discardChangesButton = document.getElementById("discard-changes-button")
+
+saveChangesButton.addEventListener("click", () => {
+    console.log("should aoeuaoeu")
+    saveDataToDb()
+    historyQueue.pop()
+    historyQueue.pop()
+    modal.style.display = "none"
+})
+discardChangesButton.addEventListener("click", () => {
+    console.log("should go back maaaan")
+    goToLastHtml()
+    modal.style.display = "none"
+})

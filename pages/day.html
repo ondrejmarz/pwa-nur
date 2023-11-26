@@ -8,6 +8,7 @@
   <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" href="/css/styles.css" rel="stylesheet">
+  <link type="text/css" href="/css/my-modal.css" rel="stylesheet">
   <script type="text/javascript" src="/js/materialize.min.js"></script>
   <link rel="manifest" href="../manifest.json">
 </head>
@@ -22,6 +23,22 @@
       </span>
     </div>
   </nav>
+   <div id="Modal" class="my-modal">
+     <div class="my-modal-content">
+       <span class="close" id="close">&times;</span>
+       <h3 style="text-align: center;">Uložit změny?</h3>
+
+       <div>
+         <div class="right my-modal-btn">
+           <a id="save-changes-button" class="btn-large add-btn" data-next>Uložit</a>
+         </div>
+         <div class="right my-modal-btn">
+           <a id="discard-changes-button" class="btn-large add-btn">Zanechat</a>
+         </div>
+
+       </div>
+     </div>
+   </div>
 
   <script src="/js/actions.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
@@ -156,6 +173,7 @@ function loadLastDayOfDayById(dayId) {
     
   </div>
 
+   <script src="/js/modal.js"></script>
   <script src="/js/ui.js"></script>
 </body>
 </html>
