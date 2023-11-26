@@ -177,6 +177,7 @@ function renderDay(day) {
               </div> 
               <div class="action-details">
                 <div class="action-title">${day.dopoAction}</div>
+                <div class="action-desc">${day.dopoActionDesc}</div>
               </div>
               <div onclick="goToDetail(3)" class="action-edit">
                 <i class="material-icons" >chevron_right</i>
@@ -204,6 +205,7 @@ function renderDay(day) {
                 </div> 
                 <div class="action-details">
                   <div class="action-title">${day.odpoAction}</div>
+                  <div class="action-desc">${day.odpoActionDesc}</div>
                 </div>
                 <div onclick="goToDetail(4)" class="action-edit">
                   <i class="material-icons">chevron_right</i>
@@ -225,6 +227,7 @@ function renderDay(day) {
                 </div> 
                 <div class="action-details">
                   <div class="action-title">${day.podAction}</div>
+                  <div class="action-desc">${day.podActionDesc}</div>
                 </div>
                 <div onclick="goToDetail(5)" class="action-edit">
                   <i class="material-icons">chevron_right</i>
@@ -251,6 +254,7 @@ function renderDay(day) {
                 </div> 
                 <div class="action-details">
                   <div class="action-title">${day.veAction}</div>
+                  <div class="action-desc">${day.veActionDesc}</div>
                 </div>
                 <div onclick="goToDetail(6)" class="action-edit">
                 <i class="material-icons">chevron_right</i>

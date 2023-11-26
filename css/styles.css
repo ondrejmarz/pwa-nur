@@ -79,6 +79,10 @@ nav .sidenav-trigger{
 .action-title{
   font-weight: bold;
 }
+.action-desc{
+  margin-top: 30px;
+  font-weight: lighter;
+}
 .action-detail{
   font-size: 0.8em;
   max-width: 400px;
