@@ -98,7 +98,6 @@
 
 
   async function updateOrCreateDayInDb(day) {
-    console.log(day)
     //Get Reference to data
     const documentRef = daysCollection.doc(day.id);
     if (documentRef == null)
@@ -142,10 +141,8 @@
     renderListOfDays()
 
   function loadLastDayOfDay(day) {
-  console.log(day)
   const lastDayId = day["lastDayId"]
   if (lastDayId === "") {
-    console.log("day is first")
   }
 
   return daysCollection.doc(lastDayId).get()

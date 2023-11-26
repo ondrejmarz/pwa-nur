@@ -76,14 +76,12 @@ function timestampToHHMM(timestamp, addMM) {
 //upravuje mělo by i vytvářet nové záznamy
 function saveDataToDb(){
   let newDay = getDayFromForm();
-  console.log(newDay)
   updateOrCreateDayInDb(newDay)
   renderDay(newDay); // vyrendruje nový den z memory, takže to bude updated i kdyby failnula db... nevím jestli to tak chceme?
 }
 let lastActivityId
 
 function goToDetail(activityId){
-  console.log(currentDay)
     lastActivityId = activityId
   switch (activityId) {
     case 1:
@@ -317,7 +315,6 @@ function renderDay(day) {
       if(btnUsed == createTimetableBtn) {
         const createTimetableBtn = document.getElementById('create-form-btn');
         createTimetableBtn.addEventListener('click',  () => renderCreateForm(currentDay.id))
-        console.log("on click added")
       }
 
         historyQueue.length = 0 // reset historyQueue
@@ -331,7 +328,6 @@ function renderDay(day) {
     function setAppbarIconArrowBack() {
         document.getElementById("icon-holder").innerHTML = arrowBack.outerHTML
         document.getElementById("icon-holder").addEventListener("click", arrowBackClick)
-        console.log("ouoeu")
     }
 
     function setAppbarIconHamburger() {
@@ -360,14 +356,11 @@ function renderDay(day) {
 
         }
 
-        console.log(lastEntry["appbarTitle"])
         setAppbarTitle(lastEntry["appbarTitle"])
     }
 
     function arrowBackClick() {
-        console.log("arrow back click")
         if (isCreateTimetableOrEditing()) {
-            console.log("is create rozvrh")
             modal.style.display = "flex";
             return
         } else {
@@ -421,7 +414,6 @@ function renderActivity(from, to, type ,name, description,activityId) {
         `
 
     const createTimetableBtn = document.getElementById('update-from-btn');
-    console.log("current day: ", currentDay)
     lastUpravitButtonCallback = () => renderUpdateForm(currentDay.previous_day_id,activityId, currentDay.day + " " + currentDay.date, activityId)
     createTimetableBtn.addEventListener('click', lastUpravitButtonCallback)
 }
@@ -438,7 +430,6 @@ function backClick() {
   div_to_replace.innerHTML = previous_header;
   const createTimetableBtn = document.getElementById('create-form-btn');
   createTimetableBtn.addEventListener('click', () => renderCreateForm(previous_day_id))
-  console.log("on click added")
 }
 
 async function renderCreateForm(id) {
@@ -448,7 +439,6 @@ async function renderCreateForm(id) {
   const lastDay = await loadLastDayOfDayById(id) 
 
   const actionsElement = document.getElementById('day-actions');
-  console.log("on click3")
 
   previous_content = actionsElement.innerHTML;
   actionsElement.innerHTML = `
@@ -635,7 +625,6 @@ async function renderCreateForm(id) {
  </div>
   `;
 
-  console.log("script loaded")
 const multiStepForm = document.querySelector("[data-multi-step]")
 const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
 let currentStep = formSteps.findIndex(step => {
@@ -648,7 +637,6 @@ if (currentStep < 0) {
 }
 
 multiStepForm.addEventListener("click", e => {
-  console.log("script loaded 1")
   let incrementor
   if (e.target.matches("[data-next]")) {
     incrementor = 1
@@ -663,7 +651,6 @@ multiStepForm.addEventListener("click", e => {
   if (allValid) {
     currentStep += incrementor
     showCurrentStep()
-    console.log("show current step")
   }
 })
 /*
@@ -675,7 +662,6 @@ formSteps.forEach(step => {
 }) */
 
 function showCurrentStep() {
-  console.log("showing current step")
   formSteps.forEach((step, index) => {
     step.classList.toggle("active", index === currentStep)
   })
@@ -686,7 +672,6 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
   //const lastDay = await loadLastDayOfDayById(id)
 
   const actionsElement = document.getElementById('day-actions');
-  console.log("on click3")
     historyQueue.push({"html": actionsElement.outerHTML, "icon": "arrow", "appbarTitle": document.getElementById("appbar-title").innerText})
     setAppbarIconArrowBack()
 
@@ -882,7 +867,6 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
   const multiStepForm = document.querySelector("[data-multi-step]")
 
   multiStepForm.addEventListener("click", e => {
-    console.log("script loaded 1")
     let incrementor
     if (e.target.matches("[data-next]")) {
       incrementor = 1
@@ -945,7 +929,6 @@ const discardChangesButton = document.getElementById("discard-changes-button")
 const archiveOkButton = document.getElementById("modal-ok-button")
 
 saveChangesButton.addEventListener("click", () => {
-    console.log("should aoeuaoeu")
     if (isEditTimetable()) {
         saveDataToDb()
         goToDetail(lastActivityId)
@@ -958,7 +941,6 @@ saveChangesButton.addEventListener("click", () => {
     modal.style.display = "none"
 })
 discardChangesButton.addEventListener("click", () => {
-    console.log("should go back maaaan")
     goToLastHtml()
     modal.style.display = "none"
 })
