@@ -227,7 +227,7 @@ function renderDay(day) {
                 </div> 
                 <div class="action-details">
                   <div class="action-title">${day.podAction}</div>
-                  <div class="action-desc">${day.podActionDesc}</div>
+                  <div class="action-desc">${day.podActionName}</div>
                 </div>
                 <div onclick="goToDetail(5)" class="action-edit">
                   <i class="material-icons">chevron_right</i>
