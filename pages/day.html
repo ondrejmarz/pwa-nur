@@ -119,7 +119,13 @@
       const aElement = document.createElement("a")
       aElement.className = "waves-effect"
       aElement.innerText = day.day + " " + day.date
-      aElement.onclick = () => renderDay(day)
+      
+      // Přidání funkce pro zavření menu po kliknutí na položku
+      aElement.onclick = () => {
+        renderDay(day);
+        const instance = M.Sidenav.getInstance(document.querySelector('.side-menu'));
+        instance.close();
+      };
 
       liEl.appendChild(aElement)
 
