@@ -493,7 +493,7 @@ async function renderCreateForm(id) {
     <label class="form-title">Ranní rozcvička</label><br/>
     <label class="form-text">Ranní rozcvička 15 minut po budíku.</label><br/>
     <label class="form-text-bold">Čas:</label>
-    <label class="form-text"> 08:15</label><br/>
+    <label class="form-text" id="cviceni-cas"></label><br/>
     <label class="form-text-bold">Rozcvička se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
     <div class="switch">
@@ -647,6 +647,24 @@ async function renderCreateForm(id) {
   </form>
  </div>
   `;
+
+function updateCasCviceni() {
+    // Získání hodnot z polí bHours a bMinutes
+    const bHours = document.getElementById("bHours") != null ? document.getElementById("bHours").value : 0;
+    const bMinutes = document.getElementById("bMinutes") != null ? document.getElementById("bMinutes").value : 0;
+
+    // Převod hodnot na timestamp a formátování
+    const timestamp = HHMMToTimestamp(bHours, bMinutes);
+    const formattedTime = timestampToHHMM(timestamp, 15);
+
+    // Aktualizace obsahu labelu
+    document.getElementById("cviceni-cas").innerText = formattedTime;
+}
+
+// Přidání posluchačů událostí na pole bHours a bMinutes
+document.getElementById("bHours").addEventListener("input", updateCasCviceni);
+document.getElementById("bMinutes").addEventListener("input", updateCasCviceni);
+
 
 const multiStepForm = document.querySelector("[data-multi-step]")
 const formSteps = [...multiStepForm.querySelectorAll("[data-step]")]
