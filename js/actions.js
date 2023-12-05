@@ -152,7 +152,7 @@ function renderDay(day) {
 
     const archiveButton = `
               <div class="right">
-                <a class="btn-large add-btn sidenav-trigger" data-target="archivate" onclick="archivovatModal()">Archivovat</a>
+                <a class="btn-floating btn-large add-btn sidenav-trigger" data-target="archivate" onclick="archivovatModal()">Archivovat</a>
               </div>
     `
     const btnUsed = day.timetableCreated ? archiveButton : createTimetableBtn
