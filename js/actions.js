@@ -478,11 +478,11 @@ async function renderCreateForm(id) {
     <label class="form-text"> 08:15</label><br/>
     <label class="form-text-bold">Rozcvička se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle-rozcvicka">
-      <label class="slider" for="toggle-rozcvicka">
-      </label>
-    </div><br/>
-    <div class="button-container">
+    <div class="switch">
+      <input type="checkbox" id="toggle-rozcvicka" class="switch__input"'>
+      <label for="toggle-rozcvicka" class="switch__label"></label>
+    </div>
+  </div><br>    <div class="button-container">
       <div class="right">
         <a class="btn-large add-btn" data-prev>Předchozí</a>
       </div>
@@ -566,10 +566,11 @@ async function renderCreateForm(id) {
     <label class="form-text"> 18:30</label><br/>
     <label class="form-text-bold">Nástup se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle-nastup">
-      <label class="slider" for="toggle-nastup">
-      </label>
-    </div><br/>
+    <div class="switch">
+    <input type="checkbox" id="toggle-nastup" class="switch__input">
+    <label for="toggle-nastup" class="switch__label"></label>
+  </div>
+  </div><br/>
     <div class="button-container">
       <div class="right">
         <a class="btn-large add-btn" data-prev>Předchozí</a>
@@ -714,10 +715,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 08:15</label><br/>
     <label class="form-text-bold">Rozcvička se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input value="${currentDay.doWarmUp}" class="toggle-checkbox" type="checkbox" id="toggle-rozcvicka">
-      <label class="slider" for="toggle-rozcvicka">
-      </label>
-    </div><br/>
+    <div class="switch">
+    <input type="checkbox" id="toggle-rozcvicka" class="switch__input" checked=${currentDay.doWarmUp}>
+    <label for="toggle-rozcvicka" class="switch__label"></label>
+  </div>
+  </div><br/>
     <div class="button-container">
       <div class="right">
         <a class="btn-large add-btn" data-prev>Předchozí</a>
@@ -802,10 +804,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text"> 18:30</label><br/>
     <label class="form-text-bold">Nástup se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
-      <input class="toggle-checkbox" type="checkbox" id="toggle-nastup">
-      <label class="slider" for="toggle-nastup">
-      </label>
-    </div><br/>
+    <div class="switch">
+    <input type="checkbox" id="toggle-nastup" class="switch__input" checked=${currentDay.doNastup}>
+    <label for="toggle-nastup" class="switch__label"></label>
+  </div>
+  </div><br/>
 
     <div class="button-container">
       <div class="right">
