@@ -804,7 +804,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     </div>
   </div>
   <div class="card" data-step data-activity-id="8">
-    <label class="form-titodle">Večerní nástup</label><br/>
+    <label class="form-title">Večerní nástup</label><br/>
     <label class="form-text-bold">Čas:</label>
     <label class="form-text"> 18:30</label><br/>
     <label class="form-text-bold">Nástup se bude konat: </label>
@@ -886,7 +886,6 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       incrementor = -1
     }
   
-    console.log("incrementor:", incrementor)
     if (incrementor == null) return
   
     // tyto sachy tady probihaji, aby se zobrazil nastup pred veceri
@@ -908,7 +907,6 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       }
     }
  
-      console.log("gonn make active card by activity id", activityId)
       makeCardActiveByActivityId(activityId)
   })
 
