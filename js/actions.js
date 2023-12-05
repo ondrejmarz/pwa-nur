@@ -6,11 +6,11 @@ function getDayFromForm() {
 
     return {
         id:currentDay.id,
-        doWarmUp: document.getElementById("toggle-rozcvicka").value, // nefunguje jak má asi je ještě potřeba nějaká transformace?
+        doWarmUp: document.getElementById("toggle-rozcvicka").checked, // nefunguje jak má asi je ještě potřeba nějaká transformace?
         podAction: document.getElementById("podvecer_name").value,
         budik: currentDay.budik,
         odpoActionDesc:  document.getElementById("odpo_description").value,
-        doNastup: document.getElementById("toggle-nastup").value,
+        doNastup: document.getElementById("toggle-nastup").checked,
         veActionDesc:  document.getElementById("vecerni_description").value,
         timetableCreated: true,
         vecerka: currentDay.vecerka,
@@ -682,6 +682,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
 
     setAppbarTitle("Úprava rozvrhu " + appbarTitle)
 
+    console.log("renderUpdateForm#currentDay je co kurva?", currentDay);
+
+    const warmUpChecked = currentDay.doWarmUp ? "checked" : ""
+    const nastupChecked = currentDay.doNastup ? "checked" : ""
+
   actionsElement.innerHTML = `
   <div>
   <form data-multi-step class="multi-step-form">
@@ -716,7 +721,7 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text-bold">Rozcvička se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
     <div class="switch">
-    <input type="checkbox" id="toggle-rozcvicka" class="switch__input" checked=${currentDay.doWarmUp}>
+    <input type="checkbox" id="toggle-rozcvicka" class="switch__input" ${warmUpChecked}>
     <label for="toggle-rozcvicka" class="switch__label"></label>
   </div>
   </div><br/>
@@ -799,13 +804,13 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     </div>
   </div>
   <div class="card" data-step data-activity-id="8">
-    <label class="form-title">Večerní nástup</label><br/>
+    <label class="form-titodle">Večerní nástup</label><br/>
     <label class="form-text-bold">Čas:</label>
     <label class="form-text"> 18:30</label><br/>
     <label class="form-text-bold">Nástup se bude konat: </label>
     <div class="toggle-checkbox-wrapper">
     <div class="switch">
-    <input type="checkbox" id="toggle-nastup" class="switch__input" checked=${currentDay.doNastup}>
+    <input type="checkbox" id="toggle-nastup" class="switch__input" ${nastupChecked}>
     <label for="toggle-nastup" class="switch__label"></label>
   </div>
   </div><br/>
@@ -881,9 +886,29 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       incrementor = -1
     }
   
+    console.log("incrementor:", incrementor)
     if (incrementor == null) return
   
-      activityId += incrementor
+    // tyto sachy tady probihaji, aby se zobrazil nastup pred veceri
+    if (incrementor === 1) {
+      if (activityId === 5) {
+        activityId = 8
+      } else if (activityId === 8) {
+        activityId = 6
+      } else {
+        activityId += incrementor
+      }
+    } else if (incrementor === -1) {
+      if (activityId === 6) {
+        activityId = 8
+      } else if (activityId === 8) {
+        activityId = 5
+      } else {
+        activityId += incrementor
+      }
+    }
+ 
+      console.log("gonn make active card by activity id", activityId)
       makeCardActiveByActivityId(activityId)
   })
 
