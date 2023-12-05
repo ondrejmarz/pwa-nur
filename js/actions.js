@@ -3,17 +3,21 @@
 const historyQueue = []
 //Toto taha data z formulářů a do formátu pro DB
 function getDayFromForm() {
+  console.log(document.getElementById("bHours").value)
+  console.log(document.getElementById("bMinutes").value)
+  console.log(document.getElementById("vHours").value)
+  console.log(document.getElementById("vMinutes").value)
 
     return {
         id:currentDay.id,
         doWarmUp: document.getElementById("toggle-rozcvicka").checked, // nefunguje jak má asi je ještě potřeba nějaká transformace?
         podAction: document.getElementById("podvecer_name").value,
-        budik: currentDay.budik,
+        budik: HHMMToTimestamp(document.getElementById("bHours").value, document.getElementById("bMinutes").value),
         odpoActionDesc:  document.getElementById("odpo_description").value,
         doNastup: document.getElementById("toggle-nastup").checked,
         veActionDesc:  document.getElementById("vecerni_description").value,
         timetableCreated: true,
-        vecerka: currentDay.vecerka,
+        vecerka: HHMMToTimestamp(document.getElementById("vHours").value, document.getElementById("vMinutes").value),
         dopoAction:  document.getElementById("dopo_name").value,
         odpoAction:  document.getElementById("odpo_name").value,
         veAction:  document.getElementById("vecerni_name").value,
@@ -73,6 +77,15 @@ function timestampToHHMM(timestamp, addMM) {
   return formattedTime;
 }
 
+function HHMMToTimestamp(hours, minutes) {
+  const date = new Date();
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+  return firebase.firestore.Timestamp.fromDate(date);
+}
+
 //upravuje mělo by i vytvářet nové záznamy
 function saveDataToDb(){
   let newDay = getDayFromForm();
@@ -85,10 +98,10 @@ function goToDetail(activityId){
     lastActivityId = activityId
   switch (activityId) {
     case 1:
-      renderActivity("8:00","8:15","Budíček","","",activityId) // todo update
+      renderActivity(timestampToHHMM(currentDay.budik, 0),timestampToHHMM(currentDay.budik, 15),"Budíček","","",activityId) // todo update
       break;
     case 2:
-      renderActivity("8:15","8:30","Rozcvička","","",activityId) // todo update
+      renderActivity(timestampToHHMM(currentDay.budik, 15),timestampToHHMM(currentDay.budik, 30),"Rozcvička","","",activityId) // todo update
       break;
     case 3:
       renderActivity("10:00","12:00","Dopolední aktivita",currentDay.dopoAction,currentDay.dopoActionDesc,activityId)
@@ -103,7 +116,7 @@ function goToDetail(activityId){
       renderActivity("20:00","21:45","Večerní aktivita",currentDay.veAction,currentDay.veActionDesc,activityId)
       break;
     case 7:
-      renderActivity("22:00","8:00","Večerka","","",activityId)//todo update 
+      renderActivity(timestampToHHMM(currentDay.vecerka, 0),"8:00","Večerka","","",activityId)//todo update 
       break;
     case 8:
       renderActivity("18:00","18:30","Nastup","Nastup","Nastup",activityId)
@@ -458,12 +471,12 @@ async function renderCreateForm(id) {
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
     <div class="input-container">
         <div class="input-column">
-        <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+        <input type="number" id="bHours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
         <label for="hours">Hodiny</label>
         </div>
         <span>:</span>
         <div class="input-column">
-        <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+        <input type="number" id="bMinutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
         <label for="minutes">Minuty</label>
         </div>
     </div>
@@ -613,12 +626,12 @@ async function renderCreateForm(id) {
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(lastDay.vecerka, 0)}</label><br/>
     <div class="input-container">
     <div class="input-column">
-    <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+    <input type="number" id="vHours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
     <label for="hours">Hodiny</label>
     </div>
     <span>:</span>
     <div class="input-column">
-    <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+    <input type="number" id="vMinutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
     <label for="minutes">Minuty</label>
     </div>
 </div>
@@ -700,12 +713,12 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(currentDay.vecerka, 0)}</label><br/>
     <div class="input-container">
         <div class="input-column">
-        <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+        <input type="number" id="bHours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
         <label for="hours">Hodiny</label>
         </div>
         <span>:</span>
         <div class="input-column">
-        <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+        <input type="number" id="bMinutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
         <label for="minutes">Minuty</label>
         </div>
     </div>
@@ -857,12 +870,12 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     <label class="form-text">Čas včerejší večerky: ${timestampToHHMM(currentDay.vecerka, 0)}</label><br/>
     <div class="input-container">
     <div class="input-column">
-    <input type="number" id="hours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
+    <input type="number" id="vHours" pattern="[0-2][0-9]|23" placeholder="08" maxlength="2" />
     <label for="hours">Hodiny</label>
     </div>
     <span>:</span>
     <div class="input-column">
-    <input type="number" id="minutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
+    <input type="number" id="vMinutes" pattern="[0-5][0-9]|59" placeholder="30" maxlength="2" />
     <label for="minutes">Minuty</label>
     </div>
 </div>
