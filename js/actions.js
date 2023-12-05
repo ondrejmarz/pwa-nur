@@ -106,6 +106,7 @@ function goToDetail(activityId){
       renderActivity("22:00","8:00","Večerka","","",activityId)//todo update 
       break;
     case 8:
+      renderActivity("18:00","18:30","Nastup","Nastup","Nastup",activityId)
         // toto jest vecerni nastup,
       break;
     default:
@@ -235,7 +236,7 @@ function renderDay(day) {
               </div>
   
               <div id="nastup">
-              
+          
               </div>
   
               <div class="card-panel action white row">
@@ -306,12 +307,16 @@ function renderDay(day) {
     
         nastupElement.innerHTML = `
           <div class="card-panel action white row">
-            <div class="action-details">
-              <div class="action-title">Nástup</div>
-            </div>
-            <div class="action-edit">
-              <i class="material-icons">chevron_right</i>
-            </div>
+                <div class="action-time-main">
+                <div class="action-time-start">18:45</div>
+              </div> 
+              <div class="action-details">
+                <div class="action-title">Nastup</div>
+                <div class="action-desc">Nastup pred veceri</div>
+              </div>
+              <div onclick="goToDetail(8)" class="action-edit">
+                <i class="material-icons">chevron_right</i>
+              </div>
           </div>
         `
       }
