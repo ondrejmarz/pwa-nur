@@ -101,10 +101,13 @@ nav .sidenav-trigger{
 .btn-large{
   border-radius: 8px;
 }
-.add-btn{
+.add-btn-create{
   background: var(--secondary) !important;
   width: auto!important;
   left: 20px;
+}
+.add-btn {
+  background: var(--secondary) !important;
 }
 input{
   box-shadow: none !important;
