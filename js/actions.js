@@ -28,7 +28,7 @@ function getDayFromForm() {
     }
 }
 
-function generateEmptyDayData() {
+function generateEmptyDayData(day, date) {
   return {
       doWarmUp: true,
       podAction: "",
@@ -48,8 +48,8 @@ function generateEmptyDayData() {
       odpoAction: "",
       veAction: "",
       podActionName: "",
-      date: "13.7.",
-      day: "Pondělí",
+      date: date,
+      day: day,
       dopoActionDesc: "",
   }
 }
@@ -129,10 +129,43 @@ function goToDetail(activityId){
 return;
 }
 
+function renderEmptyTimetable(day){
+    setAppbarTitle(day.day + " " + day.date)
+    setAppbarIconHamburger()
+    currentDay = day;
+
+    const createTimetableBtnHtml = `
+          <div class="right">
+            <a id="create-form-btn" class="btn-floating btn-large add-btn">Vytvořit rozvrh</a>
+          </div>
+    `
+
+    const actionsElement = document.getElementById('day-actions');
+
+    actionsElement.innerHTML = `
+      <div class="actions container grey-text text-darken-1">
+                <p>Tento den nemá vytvořený rozvrh.</p>
+
+              ${createTimetableBtnHtml}
+      </div>
+      `;
+    const createTimetableBtn = document.getElementById('create-form-btn');
+    createTimetableBtn.addEventListener('click',  () => renderCreateForm(currentDay.id))
+
+    historyQueue.length = 0 // reset historyQueue
+    historyQueue.push({"html": actionsElement.outerHTML, "icon": "hamburger", "appbarTitle": document.getElementById("appbar-title").innerText})
+
+
+}
 
 // Vypíše rozvrh na celý den, parametr day obsahuje všechny informace, na kterých rozvrh závisí
 // Na konci vykresluje tlačítko k archivaci
 function renderDay(day) {
+
+    if (!day.timetableCreated) {
+        renderEmptyTimetable(day)
+        return;
+    }
 
     setAppbarTitle(day.day + " " + day.date)
     setAppbarIconHamburger()

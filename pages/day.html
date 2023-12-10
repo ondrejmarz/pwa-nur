@@ -139,7 +139,8 @@
      */
     async function renderListOfDays() {
       const days = await loadAllDaysOfTabor()
-      renderDay(days[0])
+      const firstDay = days[0];
+      renderDay(firstDay)
       days.forEach(day => {
         renderDayLiElement(day)
       })
@@ -178,6 +179,32 @@ function loadLastDayOfDayById(dayId) {
             console.error("Error while last day of day with id", dayId)
             console.error(e)
           })
+}
+// smaze vsechny dny z taboru
+async function emptyDaysCollection () {
+  // Get all documents in the 'days' collection
+  await daysCollection.get()
+          .then((querySnapshot) => {
+            // Iterate through each document
+            querySnapshot.forEach((doc) => {
+              // Delete the document
+              doc.ref.delete();
+            });
+          })
+          .then(() => {
+            console.log("Collection successfully emptied.");
+          })
+          .catch((error) => {
+            console.error("Error emptying collection: ", error);
+          });
+}
+// vygeneruje novy dny v tabore
+ // je tam všude pondělí, protože pak to v db beztak není seřazené
+async function addNewDays() {
+  daysCollection.add(generateEmptyDayData("Pondělí", "13.7."))
+  daysCollection.add(generateEmptyDayData("Pondělí", "13.7."))
+  daysCollection.add(generateEmptyDayData("Pondělí", "13.7."))
+  daysCollection.add(generateEmptyDayData("Pondělí", "13.7."))
 }
   </script>
 
