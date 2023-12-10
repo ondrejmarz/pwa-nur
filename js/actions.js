@@ -136,7 +136,7 @@ function renderEmptyTimetable(day){
 
     const createTimetableBtnHtml = `
           <div class="right">
-            <a id="create-form-btn" class="btn-floating btn-large add-btn">Vytvořit rozvrh</a>
+            <a id="create-form-btn" class="btn-floating btn-large add-btn-create">Vytvořit rozvrh</a>
           </div>
     `
 
@@ -179,7 +179,7 @@ function renderDay(day) {
 
     const createTimetableBtn = `
           <div class="right">
-            <a id="create-form-btn" class="btn-floating btn-large add-btn">Vytvořit rozvrh</a>
+            <a id="create-form-btn" class="btn-floating btn-large add-btn-create">Vytvořit rozvrh</a>
           </div>
     `
 
