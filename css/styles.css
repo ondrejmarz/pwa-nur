@@ -103,6 +103,8 @@ nav .sidenav-trigger{
 }
 .add-btn{
   background: var(--secondary) !important;
+  width: auto!important;
+  left: 20px;
 }
 input{
   box-shadow: none !important;
