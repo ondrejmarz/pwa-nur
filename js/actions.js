@@ -774,11 +774,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
         </div>
     </div>
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn">Předchozí</a>
+      <div  onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
       </div>
-      <div class="right">
-        <a class="btn-large add-btn" data-next>Další</a>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn" data-next>Uložit</a>
       </div>
     </div>
   </div>
@@ -795,11 +795,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
   </div>
   </div><br/>
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn" data-prev>Předchozí</a>
-      </div>
-      <div class="right">
-        <a class="btn-large add-btn" data-next>Další</a>
+      <div  onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
+        </div>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn" data-next>Uložit</a>
       </div>
     </div>
   </div>
@@ -818,11 +818,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       <input  value="${currentDay.dopoActionDesc}" type="text" id="dopo_description" name="description"><br>
     </div>
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      <div onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
       </div>
-      <div class="right">
-        <a class="btn-large add-btn" data-next>Další</a>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn" data-next>Uložit</a>
       </div>
     </div>
   </div>
@@ -841,11 +841,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       <input value="${currentDay.odpoActionDesc}" type="text" id="odpo_description" name="description">
     </div>
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      <div  onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
       </div>
-      <div class="right">
-        <a class="btn-large add-btn" data-next>Další</a>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn">Uložit</a>
       </div>
     </div>
   </div>
@@ -864,11 +864,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       <input value="${currentDay.podAction}" type="text" id="podvecer_description" name="description">
     </div>
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      <div  onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
       </div>
-      <div class="right">
-        <a class="btn-large add-btn" data-next>Další</a>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn">Uložit</a>
       </div>
     </div>
   </div>
@@ -885,11 +885,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
   </div><br/>
 
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      <div  onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
       </div>
-      <div class="right">
-        <a class="btn-large add-btn" data-next>Další</a>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn">Uložit</a>
       </div>
     </div>
   </div>
@@ -908,11 +908,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       <input value="${currentDay.veActionDesc}"type="text" id="vecerni_description" name="description">
     </div>
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      <div i onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
       </div>
-      <div class="right">
-        <a class="btn-large add-btn" data-next>Další</a>
+      <div onClick="saveDataToDb()" class="right">
+        <a class="btn-large add-btn">Uložit</a>
       </div>
     </div>
   </div>
@@ -931,11 +931,11 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
     </div>
 </div>
     <div class="button-container">
-      <div class="right">
-        <a class="btn-large add-btn" data-prev>Předchozí</a>
+      <div onClick="discardChanges()" class="right">
+        <a class="btn-large add-btn">Zahodit</a>
       </div>
       <div onClick="saveDataToDb()" class="right">
-        <a class="btn-large add-btn" data-submit>Uložit</a>
+        <a class="btn-large add-btn" >Uložit</a>
       </div>
     </div>
   </div>
@@ -979,6 +979,14 @@ async function renderUpdateForm(id, activityId, appbarTitle) {
       makeCardActiveByActivityId(activityId)
   })
 
+
+}
+
+function discardChanges(){
+  console.log("clicked")
+  goToDetail(lastActivityId)
+  historyQueue.pop()
+  modal.style.display = "none"
 }
 
 function makeCardActiveByActivityId(activityId) {
